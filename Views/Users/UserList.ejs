@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+    <link rel="stylesheet" href="styles.css">    
+</head>
+<body>
+    <div class="user-list-container">
+        <h2>Lista de Usuarios</h2>
+        <div class="user-list-search">
+            <input type="text" id="searchInput" placeholder="Buscar usuario...">
+            <button onclick="">Buscar</button>
+        </div>
+        <table class="user-list-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Edad</th>
+                    <th>Sexo</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Altura</th>
+                    <th>Peso</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>Roberto</td>
+                <td>Garcia</td>
+                <td>28</td>
+                <td>Hombre</td>
+                <td>02/09/1995</td>
+                <td>1.80</td>
+                <td>90 kg</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+
+<script>
+    function searchUser() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementsByClassName("user-list-table")[0];
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+            

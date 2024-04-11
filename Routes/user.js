@@ -1,7 +1,10 @@
+const path = require('path');
 const express = require('express');
-const app = express();
-const usersController = require("../Controllers/users");
+const userController = require("../Controllers/usersC");
+const router = express.Router();
 
-app.get('/getusers',usersController.usersController);
+router.get('/createuserV',userController.registerusersView);
+router.post('/createuserM',userController.registerusersMethod);
+router.get('/usersList',userController.usersListView);
 
 module.exports = router;

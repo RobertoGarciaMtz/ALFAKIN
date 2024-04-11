@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Usuario</title>
+    <link rel="stylesheet" href="users.css">
+</head>
+<body>
+    <div class="user-create-container">
+        <h2>Crear Usuario</h2>
+        <form id="userCreateForm" action="/create_user" method="post">
+            <div class="user-create-form-group">    
+                <label for="nombre" class="user-create-label">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" class="user-create-input" required>
+            </div>
+            <div class="user-create-form-group">
+                <label for="apellido" class="user-create-label">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" class="user-create-input" required>
+            </div>
+            <div class="user-create-form-group">
+                <label for="edad" class="user-create-label">Edad:</label>
+                <input type="number" id="edad" name="edad" class="user-create-input" required>
+            </div>
+            <div class="user-create-form-group">
+                <label for="sexo" class="user-create-label">Sexo:</label>
+                <select id="sexo" name="sexo" class="user-create-select" required>
+                    <option value="">Seleccionar</option>
+                    <option value="Hombre">Hombre</option>
+                    <option value="Mujer">Mujer</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+            <div class="user-create-form-group">
+                <label for="fecha_nacimiento" class="user-create-label">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="user-create-input" required>
+            </div>
+            <div class="user-create-form-group">
+                <label for="altura" class="user-create-label">Altura:</label>
+                <input type="number" id="altura" name="altura" class="user-create-input" required>
+            </div>
+            <div class="user-create-form-group">
+                <label for="peso" class="user-create-label">Peso:</label>
+                <input type="number" id="peso" name="peso" class="user-create-input" required>
+            </div>
+            <div class="user-create-form-group">
+                <label for="padecimiento_congenito" class="user-create-label">Padecimiento Congénito:</label>
+                <input type="text" id="padecimiento_congenito" name="padecimiento_congenito" class="user-create-input" required>
+            </div>
+            <input type="submit" value="Crear Usuario" class="user-create-submit">
+        </form>
+    </div>
+</body>
+</html>
