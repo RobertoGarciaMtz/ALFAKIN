@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const usuariostabla = require('../models/User.model');
 
 exports.registerusersView =  (req, res, next) => {
     res.render('Users/UserCreate');
