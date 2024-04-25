@@ -1,5 +1,5 @@
 const {DataTypes} = require("sequelize");
-const SequelizeDB = require("../models/connection");
+const SequelizeDB = require("../Models/connection");
 const db = new SequelizeDB();
 //const SequelizeDB = require("./connection");
 const Padacimientos = db.conexion.define("Padacimientos",
@@ -35,10 +35,9 @@ const Padacimientos = db.conexion.define("Padacimientos",
 
 db.conexion.sync()
   .then(() => {
-    console.log('Padecimientos model synchronized with database.');
+    console.log('Users model synchronized with database.');
   })
   .catch(error => {
     console.error('Error synchronizing Users model with database:', error);
   });
-
 module.exports = Padacimientos;
