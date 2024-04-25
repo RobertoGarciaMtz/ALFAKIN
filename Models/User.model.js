@@ -7,11 +7,17 @@ const Users = db.conexion.define("Users",
     FirstName: {
       type: DataTypes.STRING(100),
     },
-    LastName: {
+    LastNmame: {
       type: DataTypes.STRING(100),
     },
     Password: {
         type: DataTypes.STRING(250),
+    },
+    Antecedentes_congenitos: {
+      type:DataTypes.STRING(250),
+    },
+    Antecedentes_familiares: {
+      type:DataTypes.STRING(250),
     },
     ImgProfile: {
         type: DataTypes.STRING(250),
