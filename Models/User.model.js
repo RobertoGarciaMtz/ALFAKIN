@@ -1,5 +1,5 @@
 const {DataTypes} = require("sequelize");
-const SequelizeDB = require("../models/connection");
+const SequelizeDB = require("../Models/connection");
 //const SequelizeDB = require("./connection");
 const db = new SequelizeDB();
 const Users = db.conexion.define("Users",
@@ -35,6 +35,9 @@ const Users = db.conexion.define("Users",
     },
     HashedKey: {
       type: DataTypes.TEXT,
+    },
+    Sexo: {
+      type: DataTypes.STRING(100),
     }
   },
   {
