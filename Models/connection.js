@@ -7,6 +7,7 @@ class ConnectionBD {
         this.usr = process.env.USERNAMEBD;
         this.pswd = process.env.PASSWORD;
         this.conexion = this.establecerConexion();
+       
 
     }
 
@@ -15,6 +16,16 @@ class ConnectionBD {
             host: 'localhost',
             dialect: 'mysql'
         });
+    }
+
+    establecerRelaciones(Usuarios, Consultas){
+        Consultas.associations = () => {
+            Consultas.belongsTo(Users,{foreignKey:"Identifier", as: "fk_consulta_usuarios"});
+          };
+
+          Usuarios.associations = () => {
+            Usuarios.hasMany(Consultas,{foreignKey:"id_consulta", as: "fk_usuarios_consulta"});
+          };
     }
 }
 

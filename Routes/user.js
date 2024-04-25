@@ -1,4 +1,3 @@
-const path = require('path');
 const express = require('express');
 const userController = require("../Controllers/usersC");
 const router = express.Router();
