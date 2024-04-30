@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Usuario</title>
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .user-details-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-details-container h2 {
+            margin-top: 0;
+        }
+
+        .user-details {
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+
+        .user-details p {
+            margin: 10px 0;
+        }
+
+        .user-details p strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="user-details-container">
+        <h2>Detalles del Usuario</h2>
+        <div class="user-details">
+            <p><strong>Nombre:</strong> <%= User.FirstName %></p>
+            <p><strong>Apellido:</strong> <%= User.LastNmame %></p>
+            <p><strong>Antecedentes Congénitos:</strong> <%= User.Antecedentes_congenitos %></p>
+            <p><strong>Antecedentes Familiares:</strong> <%= User.Antecedentes_familiares %></p>
+            <p><strong>Edad:</strong> <%= User.Age %></p>
+            <p><strong>Sexo:</strong> <%= User.Sexo %></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Usuario</title>
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .details {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .details p {
+            margin: 10px 0;
+        }
+
+        .details p strong {
+            font-weight: bold;
+        }
+
+        .form {
+            padding-top: 20px;
+        }
+
+        .form input[type="text"],
+        .form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .form input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="details">
+            <h2>Detalles del Usuario</h2>
+            <p><strong>Nombre:</strong> <%= User.FirstName %></p>
+            <p><strong>Apellido:</strong> <%= User.LastNmame %></p>
+            <p><strong>Antecedentes Congénitos:</strong> <%= User.Antecedentes_congenitos %></p>
+            <p><strong>Antecedentes Familiares:</strong> <%= User.Antecedentes_familiares %></p>
+            <!--<p><strong>Fecha de Nacimiento:</strong> <%= User.Age %></p>-->
+            <p><strong>Identificador:</strong> <%= User.Identifier %></p>
+            <p><strong>Sexo:</strong> <%= User.Sexo %></p>
+        </div>
+        
+        <div class="form">
+            <h2>Llenar Detalles</h2>
+            <form action="/guardar-detalles" method="post">
+                <label for="Razon">Razon:</label>
+                <input type="text" id="Razon" name="Razon" required>
+
+                <label for="Zona_dolor">Zona de dolor:</label>
+                <input type="text" id="Zona_dolor" name="Zona_dolor" required>
+
+                <label for="Comentarios">Comentarios:</label>
+                <textarea id="Comentarios" name="Comentarios" rows="4" required></textarea>
+
+                <label for="Recomendaciones">Recomendaciones:</label>
+                <textarea id="Recomendaciones" name="Recomendaciones" rows="4" required></textarea>
+
+                <label for="Tratamiento">Tratamiento:</label>
+                <textarea id="Tratamiento" name="Tratamiento" rows="4" required></textarea>
+
+                <input type="submit" value="Guardar Detalles">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
