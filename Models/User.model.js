@@ -10,6 +10,9 @@ const Usuarios = db.conexion.define("Usuarios",
     apellido_paterno: {
       type: DataTypes.STRING(100),
     },
+    apellido_materno: {
+      type: DataTypes.STRING(100),
+    },
     contrasena: {
         type: DataTypes.STRING(250),
     },
@@ -44,7 +47,6 @@ const Usuarios = db.conexion.define("Usuarios",
     updatedAt: "updated_at",
   }
 );
-
 db.conexion.sync()
   .then(() => {
     console.log('Users model synchronized with database.');

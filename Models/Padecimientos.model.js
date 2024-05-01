@@ -1,5 +1,5 @@
 const {DataTypes} = require("sequelize");
-const SequelizeDB = require("../models/connection.js");
+const SequelizeDB = require("./connection");
 const db = new SequelizeDB();
 //const SequelizeDB = require("./connection");
 const Padacimientos = db.conexion.define("Padecimientos",

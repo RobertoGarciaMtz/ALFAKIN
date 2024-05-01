@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
-const usuariostabla = require('../models/User.model');
-const consultastabla = require('../models/Consultas.model');
-const padecimientostabla = require('../models/Padecimientos.model');
+const usuariostabla = require('../Models/User.model');
+const consultastabla = require('../Models/Consultas.model');
+const padecimientostabla = require('../Models/Padecimientos.model');
 
 exports.registrarConsultaVista = async (req, res, next) => {
   const  User = await usuariostabla.findByPk("a398e518-8603-4593-bf55-f14e80ec356d");

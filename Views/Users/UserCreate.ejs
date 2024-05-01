@@ -12,11 +12,15 @@
         <form action="/createuserM" method="post">
             <div class="user-create-form-group">    
                 <label for="nombre" class="user-create-label">Nombre:</label>
-                <input type="text" id="FirstName" name="FirstName" class="user-create-input" required>
+                <input type="text" id="nombre" name="nombre" class="user-create-input" required>
             </div>
             <div class="user-create-form-group">
-                <label for="apellido" class="user-create-label">Apellido:</label>
-                <input type="text" id="LastNmame" name="LastNmame" class="user-create-input" required>
+                <label for="apellido" class="user-create-label">Apellido Paterno:</label>
+                <input type="text" id="apellido_paterno" name="apellido_paterno" class="user-create-input" required>
+            </div>
+            <div class="user-create-form-group">
+                <label for="apellido" class="user-create-label">Apellido Materno:</label>
+                <input type="text" id="apellido_materno" name="apellido_materno" class="user-create-input" required>
             </div>
             <div class="user-create-form-group">
                 <label for="sexo" class="user-create-label">Sexo:</label>
@@ -29,15 +33,15 @@
             </div>
             <div class="user-create-form-group">
                 <label for="fecha_nacimiento" class="user-create-label">Fecha de Nacimiento:</label>
-                <input type="date" id="Birthday" name="Birthday" class="user-create-input" required>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="user-create-input" required>
             </div>
             <div class="user-create-form-group">
                 <label for="Antecedentes_congenitos" class="user-create-label">Antecedentes congenitos:</label>
-                <input type="text" id="Antecedentes_congenitos" name="Antecedentes_congenitos" class="user-create-input" required>
+                <input type="text" id="antecedentes_congenitos" name="antecedentes_congenitos" class="user-create-input" required>
             </div>
             <div class="user-create-form-group">
                 <label for="Antecedentes_familiares" class="user-create-label">Antecedentes familiares:</label>
-                <input type="text" id="Antecedentes_familiares" name="Antecedentes_familiares" class="user-create-input" required>
+                <input type="text" id="antecedentes_familiares" name="antecedentes_familiares" class="user-create-input" required>
             </div>
             <input type="submit" value="Submit" class="user-create-submit">
         </form>

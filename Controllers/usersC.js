@@ -11,13 +11,14 @@ exports.registerusersMethod = async (req,res,next) =>{
   try{
     
     const newUser = await usuariostabla.create({
-      FirstName: req.body.FirstName,
-      LastNmame:  req.body.LastNmame,
-      Antecedentes_congenitos:  req.body.Antecedentes_congenitos,
-      Antecedentes_familiares:  req.body.Antecedentes_familiares,
-      Birthday: req.body.Birthday,
+      nombre: req.body.nombre,
+      apellido_paterno:  req.body.apellido_paterno,
+      apellido_materno:  req.body.apellido_materno,
+      antecedentes_congenitos:  req.body.antecedentes_congenitos,
+      antecedentes_familiares:  req.body.antecedentes_familiares,
+      fecha_nacimiento: req.body.fecha_nacimiento,
       Sexo: req.body.Sexo,
-      Role: "Client",
+      Rol: "Client",
     });
 
     return res.redirect('usersList');
@@ -31,8 +32,8 @@ exports.usersListView = async (req, res, next) => {
   const usersList = await usuariostabla.findAll();
   const max = usersList.length;
   for (let index = 0; index < max; index++) {
-    const age = calculateAge(usersList[index].Birthday);
-    usersList[index].Age = age;
+    const Edad = calculateAge(usersList[index].fecha_nacimiento);
+    usersList[index].Edad = Edad;
   }
   await res.render('Users/UserList',{user:usersList});
   return;
@@ -42,8 +43,8 @@ exports.findUserbyId = async (req,res,next) => {
   const User = await usuariostabla.findByPk(req.params.userId,
     {attributes: {exclude:['created_at','updated_at','Password','ImgProfile','Identifier','Role']}}
   );
-  const age = calculateAge(User.Birthday);
-  User.Age = age;
+  const edad = calculateAge(User.fecha_nacimiento);
+  User.edad = edad;
   await res.render('Users/UserbyId',{User});
   return;
 };

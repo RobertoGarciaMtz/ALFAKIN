@@ -42,7 +42,7 @@
             <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>Apellido</th>
+                    <th>Apellidos</th>
                     <th>Antecedentes Congenitos</th>
                     <th>Antecedentes Familiares</th>
                     <th>Age</th>
@@ -53,14 +53,14 @@
             <tbody>
                 <% user.forEach(function(user) { %>
                     <tr>
-                        <td><%= user.FirstName %></td>
-                        <td><%= user.LastNmame %></td>
-                        <td><%= user.Antecedentes_congenitos %></td>
-                        <td><%= user.Antecedentes_familiares %></td>
+                        <td><%= user.nombre %></td>
+                        <td><%= user.apellido_paterno %> <%= user.apellido_materno %></td>
+                        <td><%= user.antecedentes_congenitos %></td>
+                        <td><%= user.antecedentes_familiares %></td>
                         <td><%= user.Age %></td>
-                        <td><%= user.Sexo %></td>
+                        <td><%= user.Edad %></td>
                         <td>
-                            <button onclick="redirectToUser('<%= user.Identifier %>')">Buscar</button>
+                            <button onclick="redirectToUser('<%= user.id_usuario %>')">Buscar</button>
                         </td>
                     </tr>
                 <% }); %>
