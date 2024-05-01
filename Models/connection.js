@@ -1,5 +1,5 @@
 const {Sequelize, Model} = require('sequelize');
-const enviroment = require('dotenv').config();// /*dejae esta linea comentada */
+//const enviroment = require('dotenv').config();// /*dejae esta linea comentada */
 class ConnectionBD {
 
     constructor(){
