@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
-const usuariostabla = require('../Models/User.model');
-const consultastabla = require('../Models/Consultas.model');
-const padecimientostabla = require('../Models/Padecimientos.model');
+const usuariostabla = require('../models/User.model');
+const consultastabla = require('../models/Consultas.model');
+const padecimientostabla = require('../models/Padecimientos.model');
 
 exports.registrarConsultaVista = async (req, res, next) => {
   const  User = await usuariostabla.findByPk("a398e518-8603-4593-bf55-f14e80ec356d");
@@ -21,6 +21,21 @@ exports.usersListView = async (req, res, next) => {
 };
 
 exports.consultaConUsuario = async(req,res,next) => {
-  const consultasList = await consultastabla.findAll({include: [usuariostabla,padecimientostabla]});
+  const staticUsuarios = "e54ac272-07ec-11ef-9586-b00cd1a375ba";
+  const vuelta = 0;
+  const consultasList = await usuariostabla.findAll({
+    where:{
+      id_usuario: staticUsuarios
+    },
+    limit: 10,
+    offset: 10*vuelta,
+    include: [{
+      model: consultastabla,
+      include:{
+        model: padecimientostabla
+      }
+    }]
+  });
+
   res.json(consultasList);
 };
