@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Inicio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        
+        #clock {
+            font-size: 2em;
+            margin-top: 50px;
+        }
+
+        #calendar {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #calendar th, #calendar td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        #calendar th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenido a nuestra página de inicio</h1>
+    <div id="clock"></div>
+    <table id="calendar">
+        <thead>
+            <tr>
+                <th colspan="7">Abril 2024</th>
+            </tr>
+            <tr>
+                <th>Lun</th>
+                <th>Mar</th>
+                <th>Mié</th>
+                <th>Jue</th>
+                <th>Vie</th>
+                <th>Sáb</th>
+                <th>Dom</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí puedes generar dinámicamente los días del mes -->
+        </tbody>
+    </table>
+
+    <script>
+        // Función para actualizar el reloj
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Actualizar el reloj cada segundo
+        setInterval(updateClock, 1000);
+
+        // Actualizar el reloj cuando se carga la página
+        updateClock();
+
+        // Función para obtener el número de días en un mes específico
+        function daysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        // Función para generar el calendario del mes actual
+        function generateCalendar() {
+            const today = new Date();
+            const currentMonth = today.getMonth() + 1;
+            const currentYear = today.getFullYear();
+            const daysInCurrentMonth = daysInMonth(currentMonth, currentYear);
+            const firstDayOfMonth = new Date(currentYear, currentMonth - 1, 1).getDay();
+
+            const tbody = document.querySelector('#calendar tbody');
+            let dayCount = 1;
+            tbody.innerHTML = '';
+
+            for (let i = 0; i < 6; i++) {
+                const row = document.createElement('tr');
+
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDayOfMonth) {
+                        const cell = document.createElement('td');
+                        row.appendChild(cell);
+                    } else if (dayCount <= daysInCurrentMonth) {
+                        const cell = document.createElement('td');
+                        cell.textContent = dayCount;
+                        row.appendChild(cell);
+                        dayCount++;
+                    }
+                }
+
+                tbody.appendChild(row);
+            }
+        }
+
+        // Generar el calendario cuando se carga la página
+        generateCalendar();
+    </script>
+</body>
+</html>

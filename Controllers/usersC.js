@@ -43,8 +43,8 @@ exports.findUserbyId = async (req,res,next) => {
   const User = await usuariostabla.findByPk(req.params.userId,
     {attributes: {exclude:['created_at','updated_at','Password','ImgProfile','Identifier','Role']}}
   );
-  const edad = calculateAge(User.fecha_nacimiento);
-  User.edad = edad;
+  const Edad = calculateAge(User.fecha_nacimiento);
+  User.Edad = Edad;
   await res.render('Users/UserbyId',{User});
   return;
 };
