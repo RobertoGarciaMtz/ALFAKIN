@@ -1,6 +1,5 @@
 const {DataTypes} = require("sequelize");
 const SequelizeDB = require("../models/connection.js");
-const Users = require("./User.model.js");
 const db = new SequelizeDB();
 
 const Consultas = db.conexion.define("Consultas",
@@ -10,18 +9,14 @@ const Consultas = db.conexion.define("Consultas",
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    id_consulta_usuario:{
-      type: DataTypes.UUID,
-      references: {
-        model: 'Users',
-        key: 'Identifier'
-      }
-    },
     fecha_sesion: {
       type: DataTypes.DATE
     },
     tipo_cita: {
       type: DataTypes.STRING(254)
+    },
+    tipo_tratamiento: {
+      type: DataTypes.TEXT
     }
   },
   {

@@ -1,8 +1,8 @@
 const {DataTypes} = require("sequelize");
 const SequelizeDB = require("../models/connection.js");
 const db = new SequelizeDB();
-//const SequelizeDB = require("./connection");
-const Padacimientos = db.conexion.define("Padacimientos",
+
+const Padacimientos = db.conexion.define("Padecimientos",
   {
     Razon: {
       type: DataTypes.STRING(100),
@@ -19,14 +19,14 @@ const Padacimientos = db.conexion.define("Padacimientos",
     Tratamiento: {
         type: DataTypes.TEXT,
     },
-    Identifier: {
+    id_padecimiento: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     }
   },
   {
-    tablename: "Padacimientos",
+    tablename: "Padecimientos",
     // underscored: true,
     createdAt: "created_at",
     updatedAt: "updated_at",

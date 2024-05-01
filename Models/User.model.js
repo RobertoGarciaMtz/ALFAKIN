@@ -25,7 +25,7 @@ const Users = db.conexion.define("Users",
     Birthday: {
         type: DataTypes.DATE,
     },
-    Identifier: {
+    id_usuario: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,

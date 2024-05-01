@@ -1,4 +1,4 @@
-const {Sequelize} = require('sequelize');
+const {Sequelize, Model} = require('sequelize');
 
 class ConnectionBD {
 
@@ -18,14 +18,39 @@ class ConnectionBD {
         });
     }
 
-    establecerRelaciones(Usuarios, Consultas){
-        Consultas.associations = () => {
-            Consultas.belongsTo(Users,{foreignKey:"Identifier", as: "fk_consulta_usuarios"});
-          };
+    /**
+     * 
+     * @param {Model} Usuarios 
+     * @param {Model} Consultas
+     * @param {Model} Padecimientos  
+     */
+    establecerRelaciones(Usuarios, Consultas, Padecimientos){
 
-          Usuarios.associations = () => {
-            Usuarios.hasMany(Consultas,{foreignKey:"id_consulta", as: "fk_usuarios_consulta"});
-          };
+        Usuarios.hasMany(Consultas,{
+            foreignKey:"id_consulta_usuario",
+           sourceKey:"id_usuario" 
+        });
+
+        Padecimientos.hasOne(Consultas,{
+            foreignKey:"id_padecimiento_consulta",
+            sourceKey:"id_padecimiento"
+        });
+        Consultas.belongsTo(Usuarios,{foreignKey:"id_consulta_usuario",targetId:"id_usuario" });
+
+        Consultas.belongsTo(Padecimientos,{foreignKey:"id_padecimiento_consulta",targetId:"id_padecimiento" });
+
+        // Consultas.associations = () => {
+        //     Consultas.belongsTo(Usuarios,{foreignKey:"id_consulta_usuario",targetId:"id_usuario" });
+            
+        //     Consultas.belongsTo(Padecimientos,{foreignKey:"id_padecimiento_consulta",targetId:"id_padecimiento" });
+        // }
+       
+       
+
+        
+
+       
+          
     }
 }
 
