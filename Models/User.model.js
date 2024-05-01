@@ -2,27 +2,24 @@ const {DataTypes} = require("sequelize");
 const SequelizeDB = require("../models/connection.js");
 //const SequelizeDB = require("./connection");
 const db = new SequelizeDB();
-const Users = db.conexion.define("Users",
+const Usuarios = db.conexion.define("Usuarios",
   {
-    FirstName: {
+    nombre: {
       type: DataTypes.STRING(100),
     },
-    LastNmame: {
+    apellido_paterno: {
       type: DataTypes.STRING(100),
     },
-    Password: {
+    contrasena: {
         type: DataTypes.STRING(250),
     },
-    Antecedentes_congenitos: {
+    antecedentes_congenitos: {
       type:DataTypes.STRING(250),
     },
-    Antecedentes_familiares: {
+    antecedentes_familiares: {
       type:DataTypes.STRING(250),
     },
-    ImgProfile: {
-        type: DataTypes.STRING(250),
-    },
-    Birthday: {
+    fecha_nacimiento: {
         type: DataTypes.DATE,
     },
     id_usuario: {
@@ -30,7 +27,7 @@ const Users = db.conexion.define("Users",
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    Role: {
+    Rol: {
         type:DataTypes.STRING(100)
     },
     HashedKey: {
@@ -41,7 +38,7 @@ const Users = db.conexion.define("Users",
     }
   },
   {
-    tablename: "Users",
+    tablename: "Usuarios",
     // underscored: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
@@ -56,4 +53,4 @@ db.conexion.sync()
     console.error('Error synchronizing Users model with database:', error);
   });
 
-module.exports = Users;
+module.exports = Usuarios;

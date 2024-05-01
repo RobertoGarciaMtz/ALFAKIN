@@ -38,19 +38,6 @@ class ConnectionBD {
         Consultas.belongsTo(Usuarios,{foreignKey:"id_consulta_usuario",targetId:"id_usuario" });
 
         Consultas.belongsTo(Padecimientos,{foreignKey:"id_padecimiento_consulta",targetId:"id_padecimiento" });
-
-        // Consultas.associations = () => {
-        //     Consultas.belongsTo(Usuarios,{foreignKey:"id_consulta_usuario",targetId:"id_usuario" });
-            
-        //     Consultas.belongsTo(Padecimientos,{foreignKey:"id_padecimiento_consulta",targetId:"id_padecimiento" });
-        // }
-       
-       
-
-        
-
-       
-          
     }
 }
 
