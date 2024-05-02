@@ -3,7 +3,8 @@ const padecimientostabla = require('./Padecimientos.model');
 const consultasTabla = require('./Consultas.model');
 const usuariostabla = require('./User.model');
 const SequelizeDB = require('./connection');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const {validarToken} = require('../middlewares/middlewares');
 
 
 class Server {
@@ -17,12 +18,19 @@ class Server {
         this.pathConsultas = "/consultas/";
 
         this.app.set('view engine', 'ejs');
-        this.app.use(express.static('Public'));
+       
         this.app.set('views','./Views');
+        
+        this.middlewares();
+        this.rutas();
+    }
+
+    middlewares(){
+        this.app.use(express.static('Public'));
         this.app.use( express.json() );
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
-        this.rutas();
+        this.app.use(validarToken);
     }
 
     rutas(){

@@ -20,15 +20,26 @@ exports.usersListView = async (req, res, next) => {
   return;
 };
 
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {*} next 
+ */
 exports.consultaConUsuario = async(req,res,next) => {
-  const staticUsuarios = "e54ac272-07ec-11ef-9586-b00cd1a375ba";
-  const vuelta = 0;
+  let {pagina = 1, user} = req.query;
+  pagina--;
+  
+  if(user == undefined){
+    throw new Error("el usuario no ha sido definido");
+  }
+
   const consultasList = await usuariostabla.findAll({
     where:{
-      id_usuario: staticUsuarios
+      id_usuario: user
     },
     limit: 10,
-    offset: 10*vuelta,
+    offset: 10*pagina,
     include: [{
       model: consultastabla,
       include:{
@@ -38,4 +49,40 @@ exports.consultaConUsuario = async(req,res,next) => {
   });
 
   res.json(consultasList);
+};
+
+/**
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ * @param {*} next 
+ */
+exports.crearConsultaPadacimiento = async(req,res,next) => {
+  let {user} = req.query;
+
+  const nuevoPadecimiento = await padecimientostabla.create({
+    Razon: req.body.razon,
+    Zona_dolor: req.body.zdolor,
+    Comentarios: req.body.comentarios,
+    Recomendaciones: req.body.recomendaciones,
+    Tratamiento:req.body.tratamiento
+  });
+
+  if(nuevoPadecimiento == undefined){
+    throw new Error("No se pudo crear el nuevo padecimiento");
+  }
+
+  let {fechaSesion} = req.body;
+  fechaSesion = new Date(fechaSesion);
+  
+  const nuevaConsulta = await consultastabla.create({
+    fecha_sesion: fechaSesion,
+    tipo_cita: req.body.tipoCita,
+    tipo_tratamiento: req.body.tipoTratamiento,
+    id_consulta_usuario: user,
+    id_padecimiento_consulta: nuevoPadecimiento.id_padecimiento
+  });
+
+  res.json(nuevaConsulta);
+
 };
