@@ -66,15 +66,17 @@
     </style>
 </head>
 <body>
+    <%- include('../header') %>
     <div class="container">
         <div class="details">
             <h2>Detalles del Usuario</h2>
-            <p><strong>Nombre:</strong> <%= User.FirstName %></p>
-            <p><strong>Apellido:</strong> <%= User.LastNmame %></p>
+            <p><strong>Nombre:</strong> <%= User.nombre %></p>
+            <p><strong>Apellido:</strong> <%= User.apellido_paterno %></p>
+            <p><strong>Apellido:</strong> <%= User.apellido_materno %></p>
             <p><strong>Antecedentes Congénitos:</strong> <%= User.Antecedentes_congenitos %></p>
             <p><strong>Antecedentes Familiares:</strong> <%= User.Antecedentes_familiares %></p>
             <!--<p><strong>Fecha de Nacimiento:</strong> <%= User.Age %></p>-->
-            <p><strong>Identificador:</strong> <%= User.Identifier %></p>
+            <p><strong>Identificador:</strong> <%= User.id_usuario %></p>
             <p><strong>Sexo:</strong> <%= User.Sexo %></p>
         </div>
         

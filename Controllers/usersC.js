@@ -2,6 +2,11 @@ const asyncHandler = require("express-async-handler");
 const usuariostabla = require('../Models/User.model');
 const bodyParser = require("body-parser");
 
+exports.userViewNO = (req,res,next) =>{
+  res.render('Users/NewOldUser');
+  return;
+}
+
 exports.registerusersView =  (req, res, next) => {
     res.render('Users/UserCreate');
     return;
