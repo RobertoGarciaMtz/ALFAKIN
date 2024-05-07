@@ -8,6 +8,9 @@
 </head>
 <body>
     <div class="container">
+        <% if (err != "") { %>
+            <h3>El correo y/o la contraseña estan equivocadas.</h3>
+        <% } %>
         <h2>Iniciar sesión</h2>
         <form id="loginForm" action="/utilidades/authmethod" method="post">
             <div class="form-group">

@@ -1,17 +1,34 @@
 const asyncHandler = require("express-async-handler");
-//const bcrypt  = require("bycrpt");
 const usuariostabla = require('../Models/User.model');
+const {validarContrasena} = require("../utils/UtilsPassword.js");
 
 exports.loginView =  (req, res, next) => {
-    res.render('Login');
+    const {err = ""} = req.query; 
+    console.log("el error es: "+err);
+    res.render('Login',{err});
     return;
   };
   
-exports.loginAuth = (req, res,next) =>{
-  const contraseña = req.body.password;
-  const usuario = req.body.id_usuario;
-  return res.redirect('/utilidades/Dashboard');
-}
+exports.loginAuth = async (req, res,next) =>{
+  const {password,id_usuario} = req.body;
+  const usuarioPosible = await usuariostabla.findOne({
+    where: { nombre: id_usuario}
+  });
+
+  if(usuarioPosible == null || usuarioPosible == undefined){
+    throw new Error("No se encontro ningun usuario con las credenciales dadas");
+  }
+  
+  const checarLogeo =await validarContrasena(password,usuarioPosible.contrasena);
+
+  if(checarLogeo){
+    return res.redirect('/utilidades/Dashboard');
+  }else{
+    return res.redirect("/?err=101")
+  }
+
+  
+} 
 
 exports.dashboardview = (req,res,next) => {
   

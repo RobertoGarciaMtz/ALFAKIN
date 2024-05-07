@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const usuariostabla = require('../Models/User.model');
 const bodyParser = require("body-parser");
+const {generarContrasena} = require("../utils/UtilsPassword.js");
 
 exports.userViewNO = (req,res,next) =>{
   res.render('Users/NewOldUser');
@@ -14,8 +15,8 @@ exports.registerusersView =  (req, res, next) => {
 
 exports.registerusersMethod = async (req,res,next) =>{
   try{
-    
-    const newUser = await usuariostabla.create({
+    const contrasena = await generarContrasena("contrasena");
+    await usuariostabla.create({
       nombre: req.body.nombre,
       apellido_paterno:  req.body.apellido_paterno,
       apellido_materno:  req.body.apellido_materno,
@@ -24,6 +25,7 @@ exports.registerusersMethod = async (req,res,next) =>{
       fecha_nacimiento: req.body.fecha_nacimiento,
       Sexo: req.body.Sexo,
       Rol: "Client",
+      contrasena
     });
 
     return res.redirect('usersList');

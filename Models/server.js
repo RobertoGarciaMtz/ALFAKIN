@@ -4,7 +4,7 @@ const consultasTabla = require('./Consultas.model');
 const usuariostabla = require('./User.model');
 const SequelizeDB = require('./connection');
 const bodyParser = require('body-parser');
-const {validarToken} = require('../middlewares/middlewares');
+const {validarToken,addHeaders} = require('../middlewares/middlewares');
 
 
 class Server {
@@ -30,11 +30,8 @@ class Server {
         this.app.use( express.json() );
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
-        //this.app.use(validarToken);
-        this.app.use((req, res, next) => {
-            res.locals.layout = 'header';
-            next();
-        });        
+        this.app.use(validarToken);
+        this.app.use(addHeaders);        
     }
 
     rutas(){
