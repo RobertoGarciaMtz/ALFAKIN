@@ -161,3 +161,31 @@ input[type="submit"]:hover {
 .user-list-table tbody tr:hover {
     background-color: #f2f2f2;
 }
+
+
+.padecimientos-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.padecimientos-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+}
+
+.padecimiento {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.padecimiento p {
+    margin: 5px 0;
+}
+
+.padecimiento p strong {
+    font-weight: bold;
+}

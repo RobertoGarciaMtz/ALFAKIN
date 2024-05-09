@@ -67,36 +67,47 @@
 </head>
 <body>
     <%- include('../header') %>
-    <div class="container">
+    <div class="details">
         <div class="details">
             <h2>Detalles del Usuario</h2>
             <p><strong>Nombre:</strong> <%= User.nombre %></p>
             <p><strong>Apellido:</strong> <%= User.apellido_paterno %></p>
             <p><strong>Apellido:</strong> <%= User.apellido_materno %></p>
             <p><strong>Antecedentes Congénitos:</strong> <%= User.Antecedentes_congenitos %></p>
-            <p><strong>Antecedentes Familiares:</strong> <%= User.Antecedentes_familiares %></p>
+            <p id><strong>Antecedentes Familiares:</strong> <%= User.Antecedentes_familiares %></p>
             <!--<p><strong>Fecha de Nacimiento:</strong> <%= User.Age %></p>-->
-            <p><strong>Identificador:</strong> <%= User.id_usuario %></p>
             <p><strong>Sexo:</strong> <%= User.Sexo %></p>
         </div>
-        
         <div class="form">
             <h2>Llenar Detalles</h2>
-            <form action="/guardar-detalles" method="post">
+            <form action="/consultas/" method="post">
+                <input type="hidden"id="id_usuario" name="id_usuario" value='<%= User.id_usuario %>'>
+                <input type="hidden"id="fechaSesion" name="fechaSesion">
+                <div class="form">
+                    <label for="TipoCita" class="user-create-label">Tipo de Cita:</label>
+                    <select id="tipoCita" name="tipoCita"required>
+                        <option value="">Seleccionar</option>
+                        <option value="Domicilio">A domicilio</option>
+                        <option value="Consultorio">Consultorio</option>
+                    </select>
+                </div>
+                <label for="Tipotratamiento">Tipo de tratamiento:</label>
+                <input type="text" id="tipoTratamiento" name="tipoTratamiento" required>
+
                 <label for="Razon">Razon:</label>
-                <input type="text" id="Razon" name="Razon" required>
+                <input type="text" id="razon" name="razon" required>
 
                 <label for="Zona_dolor">Zona de dolor:</label>
-                <input type="text" id="Zona_dolor" name="Zona_dolor" required>
+                <input type="text" id="zdolor" name="zdolor" required>
 
                 <label for="Comentarios">Comentarios:</label>
-                <textarea id="Comentarios" name="Comentarios" rows="4" required></textarea>
+                <textarea id="comentarios" name="comentarios" rows="4" required></textarea>
 
                 <label for="Recomendaciones">Recomendaciones:</label>
-                <textarea id="Recomendaciones" name="Recomendaciones" rows="4" required></textarea>
+                <textarea id="recomendaciones" name="recomendaciones" rows="4" required></textarea>
 
                 <label for="Tratamiento">Tratamiento:</label>
-                <textarea id="Tratamiento" name="Tratamiento" rows="4" required></textarea>
+                <textarea id="tratamiento" name="tratamiento" rows="4" required></textarea>
 
                 <input type="submit" value="Guardar Detalles">
             </form>

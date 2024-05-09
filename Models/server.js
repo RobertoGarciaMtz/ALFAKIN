@@ -16,7 +16,7 @@ class Server {
         this.pathLogin = "/";
         this.pathutilidades = "/utilidades/"
         this.pathConsultas = "/consultas/";
-
+        this.pathPadecimientos = "/padecimientos/";
         this.app.set('view engine', 'ejs');
        
         this.app.set('views','./Views');
@@ -39,6 +39,7 @@ class Server {
         this.app.use(this.pathLogin,require('../Routes/login'));
         this.app.use(this.pathConsultas,require('../Routes/consulta'))
         this.app.use(this.pathutilidades,require('../Routes/utilidades'))
+        this.app.use(this.pathPadecimientos,require('../Routes/padecimientos'))
     }
 
     crearConexiones(){

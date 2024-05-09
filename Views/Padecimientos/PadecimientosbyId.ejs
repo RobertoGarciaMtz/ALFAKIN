@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padecimientos</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <%- include('../header') %>
+    <div class="padecimientos-container">
+        <h2>Padecimientos</h2>
+        <div class="padecimientos-list">
+            <div class="padecimiento">
+                <p><strong>Razón:</strong> <%= padecimientoSpec.Razon %></p>
+                <p><strong>Zona de Dolor:</strong> <%= padecimientoSpec.Zona_dolor %></p>
+                <p><strong>Comentarios:</strong> <%= padecimientoSpec.Comentarios %></p>
+                <p><strong>Recomendaciones:</strong> <%= padecimientoSpec.Recomendaciones %></p>
+                <p><strong>Tratamiento:</strong> <%= padecimientoSpec.Tratamiento %></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

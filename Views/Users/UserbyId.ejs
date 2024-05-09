@@ -41,6 +41,11 @@
             font-weight: bold;
         }
     </style>
+    <script>
+        function redirectToUser(userId) {
+            window.location.href = "/consultas/"+userId;
+        }
+    </script>  
 </head>
 <body>
     <%- include('../header') %>
@@ -54,6 +59,7 @@
             <p><strong>Edad:</strong> <%= User.Edad %></p>
             <p><strong>Sexo:</strong> <%= User.Sexo %></p>
         </div>
+        <button onclick="redirectToUser('<%= User.id_usuario %>')">Ver consultas</button>
     </div>
 </body>
 </html>

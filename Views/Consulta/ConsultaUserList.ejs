@@ -65,8 +65,8 @@
         }
     </style>
     <script>
-        function redirectToUser(userId) {
-            window.location.href = "/usuarios/userbyId/"+userId;
+        function redirectToUser(padecimientoId) {
+            window.location.href = "/padecimientos/"+padecimientoId;
         }
     </script>  
 </head>
@@ -79,7 +79,7 @@
             <p><strong>Apellido:</strong> <%= consultasList.apellido_paterno %> <%= consultasList.apellido_materno %></p>
             <p><strong>Antecedentes Congénitos:</strong> <%= consultasList.antecedentes_congenitos %></p>
             <p><strong>Antecedentes Familiares:</strong> <%= consultasList.antecedentes_familiares %></p>
-            <!--<p><strong>Fecha de Nacimiento:</strong> <%= User.Age %></p>-->
+            <p><strong>Fecha de Nacimiento:</strong> <%= consultasList.Edad %></p>
             <p><strong>Sexo:</strong> <%= consultasList.Sexo %></p>
         </div>
         <h1>Consultas previas</h1>

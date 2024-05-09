@@ -4,7 +4,7 @@ const consultastabla = require('../models/Consultas.model');
 const padecimientostabla = require('../models/Padecimientos.model');
 
 exports.registrarConsultaVista = async (req, res, next) => {
-  const  User = await usuariostabla.findByPk("a398e518-8603-4593-bf55-f14e80ec356d");
+  const  User = await usuariostabla.findByPk("2a5d9c10-58b5-4c31-8556-7a5bbc21e5e8");
     res.render('Consulta/ConsultaCreate',{User});
     return;
   };
@@ -30,13 +30,13 @@ exports.consultaConUsuario = async(req,res,next) => {
   let {pagina = 1, user} = req.query;
   pagina--;
   
-  if(user == undefined){
-    throw new Error("el usuario no ha sido definido");
+  if(req.params.userId == undefined){
+    throw new Error("No ha llegado el dato correcto");
   }
 
   const consultasList = await usuariostabla.findAll({
     where:{
-      id_usuario: user
+      id_usuario: req.params.userId,
     },
     limit: 10,
     offset: 10*pagina,
@@ -47,8 +47,10 @@ exports.consultaConUsuario = async(req,res,next) => {
       }
     }]
   });
-
-  res.json(consultasList);
+  const Edad = calculateAge(consultasList[0].fecha_nacimiento);
+  consultasList[0].Edad = Edad;
+  //res.json(consultasList);
+  return res.render("consulta/ConsultaUserList",{consultasList:consultasList[0]});
 };
 
 /**
@@ -72,17 +74,26 @@ exports.crearConsultaPadacimiento = async(req,res,next) => {
     throw new Error("No se pudo crear el nuevo padecimiento");
   }
 
-  let {fechaSesion} = req.body;
-  fechaSesion = new Date(fechaSesion);
-  
+   let {fechaSesion} = req.body;
+   fechaSesion = new Date();
   const nuevaConsulta = await consultastabla.create({
     fecha_sesion: fechaSesion,
     tipo_cita: req.body.tipoCita,
     tipo_tratamiento: req.body.tipoTratamiento,
-    id_consulta_usuario: user,
+    id_consulta_usuario: req.body.id_usuario,
     id_padecimiento_consulta: nuevoPadecimiento.id_padecimiento
   });
 
   res.json(nuevaConsulta);
 
 };
+
+function calculateAge(birthDate = new Date() ){
+  const currentDate = new Date();
+  let age = currentDate.getFullYear() - birthDate.getFullYear();
+  if (currentDate.getMonth() < birthDate.getMonth() || 
+     (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() < birthDate.getDate())) {
+      age--;
+  }
+  return age;
+}

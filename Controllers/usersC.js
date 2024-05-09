@@ -1,7 +1,8 @@
 const asyncHandler = require("express-async-handler");
-const usuariostabla = require('../Models/User.model');
+const usuariostabla = require('../models/User.model');
 const bodyParser = require("body-parser");
 const {generarContrasena} = require("../utils/UtilsPassword.js");
+const { Op } = require('sequelize');
 
 exports.userViewNO = (req,res,next) =>{
   res.render('Users/NewOldUser');
@@ -36,7 +37,15 @@ exports.registerusersMethod = async (req,res,next) =>{
 };
 
 exports.usersListView = async (req, res, next) => {
-  const usersList = await usuariostabla.findAll();
+  const usersList = await usuariostabla.findAll({
+    where: {
+      [Op.or]: [
+        { Rol: "Client" },
+        { Rol: "Fisioterapeuta" },
+      ]
+    },
+  }
+  );
   const max = usersList.length;
   for (let index = 0; index < max; index++) {
     const Edad = calculateAge(usersList[index].fecha_nacimiento);
@@ -48,7 +57,7 @@ exports.usersListView = async (req, res, next) => {
   
 exports.findUserbyId = async (req,res,next) => {
   const User = await usuariostabla.findByPk(req.params.userId,
-    {attributes: {exclude:['created_at','updated_at','Password','ImgProfile','Identifier','Role']}}
+    {attributes: {exclude:['created_at','updated_at','Password','ImgProfile','Rol']}}
   );
   const Edad = calculateAge(User.fecha_nacimiento);
   User.Edad = Edad;

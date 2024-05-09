@@ -4,7 +4,7 @@ const consultaController = require("../Controllers/consultaC");
 const router = express.Router();
 
 router.get('/crearconsultaV',consultaController.registrarConsultaVista);
-router.get('/',consultaController.consultaConUsuario);
+router.get('/:userId',consultaController.consultaConUsuario);
 router.post('/',consultaController.crearConsultaPadacimiento);
 /*router.post('/createconsultaM',userController.registerusersMethod);
 router.get('/consultaList',userController.usersListView);
