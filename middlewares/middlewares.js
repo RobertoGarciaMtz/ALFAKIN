@@ -1,4 +1,5 @@
 const {Request,Response} = require("express");
+const {validarTokenJWT} = require("../utils/tokenUtils.js");
 
 /**
  * 
@@ -9,11 +10,15 @@ const {Request,Response} = require("express");
 const validarToken = function(req,res,next){
     const {authorization} = req.headers;
     console.log("El path que se visita es: "+req.path);
-    if(req.path !== "/"){
-        if(authorization == undefined){
+    if(req.path !== "/" && req.path !== "/utilidades/authmethod"){
+        if(authorization === undefined){
             console.error("Aqui debe ejecutarse el error de que no se debe continuar porque no se cuenta con token");
-            //throw new Error("La peticion no cuenta con token de autorizacion");
+             //throw new Error("La peticion no cuenta con token de autorizacion");
+        }else{
+            //const tokendata = validarTokenJWT(authorization);
+            
         }
+
     }
     next();
 }
