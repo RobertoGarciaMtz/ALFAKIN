@@ -10,12 +10,12 @@ exports.loginView =  (req, res, next) => {
   };
   
 exports.loginAuth = async (req, res,next) =>{
-  const {password,id_usuario} = req.body;
+  const {password,Usuario} = req.body;
+  console.log(Usuario);
   const usuarioPosible = await usuariostabla.findOne({
-    where: { nombre: id_usuario}
+    where: { nombre: Usuario,Rol: "Admin"}
   });
-
-  if(usuarioPosible == null || usuarioPosible == undefined){
+  if(usuarioPosible === null || usuarioPosible === undefined){
     throw new Error("No se encontro ningun usuario con las credenciales dadas");
   }
   

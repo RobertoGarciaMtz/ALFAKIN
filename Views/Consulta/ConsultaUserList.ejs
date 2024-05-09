@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Usuario</title>
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .details {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .details p {
+            margin: 10px 0;
+        }
+
+        .details p strong {
+            font-weight: bold;
+        }
+
+        .form {
+            padding-top: 20px;
+        }
+
+        .form input[type="text"],
+        .form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .form input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        function redirectToUser(userId) {
+            window.location.href = "/usuarios/userbyId/"+userId;
+        }
+    </script>  
+</head>
+<body>
+    <%- include('../header') %>
+    <div class="container">
+        <div class="details">
+            <h2>Detalles del Usuario</h2>
+            <p><strong>Nombre:</strong> <%= consultasList.nombre %></p>
+            <p><strong>Apellido:</strong> <%= consultasList.apellido_paterno %> <%= consultasList.apellido_materno %></p>
+            <p><strong>Antecedentes Congénitos:</strong> <%= consultasList.antecedentes_congenitos %></p>
+            <p><strong>Antecedentes Familiares:</strong> <%= consultasList.antecedentes_familiares %></p>
+            <!--<p><strong>Fecha de Nacimiento:</strong> <%= User.Age %></p>-->
+            <p><strong>Sexo:</strong> <%= consultasList.Sexo %></p>
+        </div>
+        <h1>Consultas previas</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha Sesion</th>
+                    <th>Tipo Cita</th>
+                    <th>Tratamiento</th>
+                    <th>Especificaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% consultasList.Consultas.forEach(item => { %>
+                    <tr>
+                        <td><%= item.fecha_sesion %></td>
+                        <td><%= item.tipo_cita %></td>
+                        <td><%= item.tipo_tratamiento %></td>
+                        <td>
+                            <button onclick="redirectToUser('<%= item.id_padecimiento_consulta %>')">Ver Consulta</button>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
