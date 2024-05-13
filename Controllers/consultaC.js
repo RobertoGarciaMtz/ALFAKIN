@@ -9,6 +9,49 @@ exports.registrarConsultaVista = async (req, res, next) => {
     return;
   };
 
+
+exports.eliminarConsultaPorId = async (req,res,next)=> {
+  const consultaId = req.params.consultaId;
+
+  const entidadConsulta = await consultastabla.findByPk(consultaId);
+
+  if(entidadConsulta === null){
+    return res.status(404).json({"razon":"No se encontro el recurso "+consultaId})
+  }
+
+  const entidadPadecimiento = await padecimientostabla.findByPk(entidadConsulta.id_padecimiento_consulta);
+
+  await entidadConsulta.destroy();
+  await entidadPadecimiento.destroy();
+  
+  return res.status(200).json({"mensaje":"El registro se ha eliminado correctamente"});
+
+}
+
+exports.editarDatosConsultaPorUsuario = async (req,res,next) => {
+  const padecimientoId = req.params.padecimientoId;
+
+  const {razon,zdolor,comentarios,recomendaciones,tratamiento} = req.body;
+
+  //Aqui se tendra que validar cualquier cosa, a discutir aun con Beto
+
+  const entidadPadecimiento = await padecimientostabla.findByPk(padecimientoId);
+
+  if(entidadPadecimiento === null){
+    return res.status(404).json({"razon":"No se encontro el recurso "+padecimientoId})
+  }
+
+  entidadPadecimiento.Razon = razon;
+  entidadPadecimiento.Zona_dolor = zdolor;
+  entidadPadecimiento.Comentarios = comentarios;
+  entidadPadecimiento.Recomendaciones = recomendaciones;
+  entidadPadecimiento.Tratamiento = tratamiento;
+  
+  await entidadPadecimiento.save({fields:["Razon","Zona_dolor","Comentarios","Recomendaciones","Tratamiento"]})
+
+  res.status(200).json({"mensaje":"El registro ha sido actualizado correctamente"});
+}
+
 exports.usersListView = async (req, res, next) => {
   const usersList = await usuariostabla.findAll();
   const max = usersList.length;
@@ -27,7 +70,7 @@ exports.usersListView = async (req, res, next) => {
  * @param {*} next 
  */
 exports.consultaConUsuario = async(req,res,next) => {
-  let {pagina = 1, user} = req.query;
+  let {pagina = 1} = req.query;
   pagina--;
   
   if(req.params.userId == undefined){
@@ -47,10 +90,8 @@ exports.consultaConUsuario = async(req,res,next) => {
       }
     }]
   });
-  const Edad = calculateAge(consultasList[0].fecha_nacimiento);
-  consultasList[0].Edad = Edad;
-  //res.json(consultasList);
-  return res.render("consulta/ConsultaUserList",{consultasList:consultasList[0]});
+  consultasList[0].Edad = calculateAge(consultasList[0].fecha_nacimiento);
+ return res.render("consulta/ConsultaUserList",{consultasList:consultasList[0]});
 };
 
 /**

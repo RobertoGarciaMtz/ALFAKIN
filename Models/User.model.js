@@ -16,6 +16,9 @@ const Usuarios = db.conexion.define("Usuarios",
     contrasena: {
         type: DataTypes.STRING(250),
     },
+     telefono: {
+       type: DataTypes.STRING(50)
+     },
     antecedentes_congenitos: {
       type:DataTypes.STRING(250),
     },

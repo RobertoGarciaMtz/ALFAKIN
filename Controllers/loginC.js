@@ -34,7 +34,7 @@ exports.loginAuth = async (req, res,next) =>{
   }else{
     return res.redirect("/?err=101")
   }
-
+  return res.redirect('/utilidades/Dashboard');
   
 } 
 
