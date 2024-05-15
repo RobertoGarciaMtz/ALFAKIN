@@ -1,12 +1,11 @@
-const asyncHandler = require("express-async-handler");
 const usuariostabla = require('../models/User.model');
 const consultastabla = require('../models/Consultas.model');
 const padecimientostabla = require('../models/Padecimientos.model');
+const {calculateAge} = require("../utils/FuncionesUtils.js");
 
 exports.registrarConsultaVista = async (req, res, next) => {
   const  User = await usuariostabla.findByPk("2a5d9c10-58b5-4c31-8556-7a5bbc21e5e8");
     res.render('Consulta/ConsultaCreate',{User});
-    return;
   };
 
 
@@ -16,7 +15,7 @@ exports.eliminarConsultaPorId = async (req,res,next)=> {
   const entidadConsulta = await consultastabla.findByPk(consultaId);
 
   if(entidadConsulta === null){
-    return res.status(404).json({"razon":"No se encontro el recurso "+consultaId})
+    res.status(404).json({"razon":"No se encontro el recurso "+consultaId})
   }
 
   const entidadPadecimiento = await padecimientostabla.findByPk(entidadConsulta.id_padecimiento_consulta);
@@ -24,21 +23,22 @@ exports.eliminarConsultaPorId = async (req,res,next)=> {
   await entidadConsulta.destroy();
   await entidadPadecimiento.destroy();
   
-  return res.status(200).json({"mensaje":"El registro se ha eliminado correctamente"});
+  res.status(200).json({"mensaje":"El registro se ha eliminado correctamente"});
 
 }
 
 exports.editarDatosConsultaPorUsuario = async (req,res,next) => {
   const padecimientoId = req.params.padecimientoId;
 
-  const {razon,zdolor,comentarios,recomendaciones,tratamiento} = req.body;
+  const {razon,zdolor,comentarios,recomendaciones,tratamiento,fechaSesion = new Date(),tipoCita,tipoTratamiento} = req.body;
 
   //Aqui se tendra que validar cualquier cosa, a discutir aun con Beto
 
   const entidadPadecimiento = await padecimientostabla.findByPk(padecimientoId);
+  const entidadConsulta = await consultastabla.findOne({where:{id_padecimiento_consulta: padecimientoId}});
 
-  if(entidadPadecimiento === null){
-    return res.status(404).json({"razon":"No se encontro el recurso "+padecimientoId})
+  if(entidadPadecimiento === null || entidadConsulta === null){
+     res.status(404).json({"razon":"No se encontro el recurso "+padecimientoId})
   }
 
   entidadPadecimiento.Razon = razon;
@@ -48,6 +48,12 @@ exports.editarDatosConsultaPorUsuario = async (req,res,next) => {
   entidadPadecimiento.Tratamiento = tratamiento;
   
   await entidadPadecimiento.save({fields:["Razon","Zona_dolor","Comentarios","Recomendaciones","Tratamiento"]})
+
+  entidadConsulta.tipo_cita = tipoCita;
+  entidadConsulta.tipo_tratamiento = tipoTratamiento;
+  entidadConsulta.fecha_sesion = fechaSesion;
+
+  await entidadConsulta.save({fields:["tipo_cita","tipo_tratamiento","fecha_sesion"]});
 
   res.status(200).json({"mensaje":"El registro ha sido actualizado correctamente"});
 }
@@ -60,7 +66,6 @@ exports.usersListView = async (req, res, next) => {
     usersList[index].Age = age;
   }
   await res.render('Users/UserList',{user:usersList});
-  return;
 };
 
 /**
@@ -91,7 +96,7 @@ exports.consultaConUsuario = async(req,res,next) => {
     }]
   });
   consultasList[0].Edad = calculateAge(consultasList[0].fecha_nacimiento);
- return res.render("consulta/ConsultaUserList",{consultasList:consultasList[0]});
+  res.render("consulta/ConsultaUserList",{consultasList:consultasList[0]});
 };
 
 /**
@@ -128,13 +133,3 @@ exports.crearConsultaPadacimiento = async(req,res,next) => {
   res.json(nuevaConsulta);
 
 };
-
-function calculateAge(birthDate = new Date() ){
-  const currentDate = new Date();
-  let age = currentDate.getFullYear() - birthDate.getFullYear();
-  if (currentDate.getMonth() < birthDate.getMonth() || 
-     (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() < birthDate.getDate())) {
-      age--;
-  }
-  return age;
-}

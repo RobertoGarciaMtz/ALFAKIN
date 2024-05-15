@@ -7,5 +7,5 @@ router.post('/createuserM',userController.registerusersMethod);
 router.get('/usersList',userController.usersListView);
 router.get('/userbyId/:userId',userController.findUserbyId);
 router.get('/userNewOld',userController.userViewNO);
-
+router.get('/editarUsuario/:userId',userController.editarUsuario);
 module.exports = router;

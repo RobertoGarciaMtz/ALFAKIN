@@ -1,4 +1,3 @@
-const asyncHandler = require("express-async-handler");
 const usuariostabla = require('../Models/User.model');
 const {validarContrasena} = require("../utils/UtilsPassword.js");
 const {crearToken} = require("../utils/tokenUtils.js");
@@ -7,7 +6,6 @@ exports.loginView =  (req, res, next) => {
     const {err = ""} = req.query; 
     console.log("el error es: "+err);
     res.render('Login',{err});
-    return;
   };
   
 /**
@@ -32,13 +30,13 @@ exports.loginAuth = async (req, res,next) =>{
     const token = crearToken(usuarioPosible.id_usuario);
   
   }else{
-    return res.redirect("/?err=101")
+    res.redirect("/?err=101")
   }
-  return res.redirect('/utilidades/Dashboard');
+  res.redirect('/utilidades/Dashboard');
   
 } 
 
 exports.dashboardview = (req,res,next) => {
   
-  return res.render('Dashboard');
+  res.render('Dashboard');
 }

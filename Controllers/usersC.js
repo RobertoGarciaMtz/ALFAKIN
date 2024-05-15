@@ -1,8 +1,7 @@
-const asyncHandler = require("express-async-handler");
 const usuariostabla = require('../models/User.model');
-const bodyParser = require("body-parser");
 const {generarContrasena} = require("../utils/UtilsPassword.js");
 const { Op } = require('sequelize');
+const {calculateAge} = require("../utils/FuncionesUtils.js");
 
 exports.userViewNO = (req,res,next) =>{
   res.render('Users/NewOldUser');
@@ -36,6 +35,32 @@ exports.registerusersMethod = async (req,res,next) =>{
   }
 };
 
+exports.editarUsuario = async (req,res,next) => {
+
+    const idUsuario = req.params.idUsuario;
+
+    const entidadUsuario = await usuariostabla.findByPk(idUsuario):
+
+    if(entidadUsuario === null){
+      return res.status(404).json({"razon":"No se encontro el recurso "+idUsuario});
+    }
+
+    const {nombre,apellido_paterno,apellido_materno,antecedentes_congenitos,antecedentes_familiares,fecha_nacimiento} = req.body;
+
+    entidadUsuario.nombre = nombre;
+    entidadUsuario.apellido_materno = apellido_materno;
+    entidadUsuario.apellido_paterno = apellido_paterno;
+    entidadUsuario.antecedentes_congenitos = antecedentes_congenitos;
+    entidadUsuario.antecedentes_familiares = antecedentes_familiares;
+    entidadUsuario.fecha_nacimiento = fecha_nacimiento;
+
+    await entidadUsuario.save({fields:["nombre","apellido_materno","apellido_paterno"
+    ,"antecedentes_congenitos","antecedentes_familiares","fecha_nacimiento"]});
+
+    return res.status(200).json({"mensaje":"El registro ha sido actualizado correctamente"});
+
+}
+
 exports.usersListView = async (req, res, next) => {
   const usersList = await usuariostabla.findAll({
     where: {
@@ -64,13 +89,3 @@ exports.findUserbyId = async (req,res,next) => {
   await res.render('Users/UserbyId',{User});
   return;
 };
-
-function calculateAge(birthDate = new Date() ){
-  const currentDate = new Date();
-  let age = currentDate.getFullYear() - birthDate.getFullYear();
-  if (currentDate.getMonth() < birthDate.getMonth() || 
-     (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() < birthDate.getDate())) {
-      age--;
-  }
-  return age;
-}
