@@ -1,4 +1,5 @@
 const usuariostabla = require('../models/User.model');
+const consultastabla = require('../models/Consultas.model');
 const {generarContrasena} = require("../utils/UtilsPassword.js");
 const { Op } = require('sequelize');
 const {calculateAge} = require("../utils/FuncionesUtils.js");
@@ -35,24 +36,46 @@ exports.registerusersMethod = async (req,res,next) =>{
   }
 };
 
+exports.eliminarUsuario = async (req,res,next) => {
+  const idUsuario = req.params.userId;
+  console.log(idUsuario);
+  const entidadUsuario = await usuariostabla.findOne({
+    where:{
+      id_usuario: idUsuario
+    },
+    include:[{
+      model: consultastabla
+    }]
+  });
+
+  if(entidadUsuario === null || entidadUsuario.Consultas.length > 0){
+    console.log("No se puede eliminar el registro ya que no existe o tiene consultas");
+    res.status(404).json({"msg":"No se puede eliminar el registro ya que no existe o tiene consultas"});
+    return;
+  }
+  await entidadUsuario.destroy();
+  res.status(200).json({"msg":"El registro se elimino correctamente"});
+}
+
 exports.editarUsuario = async (req,res,next) => {
 
-    const idUsuario = req.params.idUsuario;
+    const idUsuario = req.params.userId;
 
-    const entidadUsuario = await usuariostabla.findByPk(idUsuario):
+    const entidadUsuario = await usuariostabla.findByPk(idUsuario);
 
     if(entidadUsuario === null){
       return res.status(404).json({"razon":"No se encontro el recurso "+idUsuario});
     }
 
-    const {nombre,apellido_paterno,apellido_materno,antecedentes_congenitos,antecedentes_familiares,fecha_nacimiento} = req.body;
+    const {nombre,apellido_paterno,apellido_materno,antecedentes_congenitos,antecedentes_familiares,fecha_nacimiento,telefono} = req.body;
 
     entidadUsuario.nombre = nombre;
     entidadUsuario.apellido_materno = apellido_materno;
     entidadUsuario.apellido_paterno = apellido_paterno;
     entidadUsuario.antecedentes_congenitos = antecedentes_congenitos;
     entidadUsuario.antecedentes_familiares = antecedentes_familiares;
-    entidadUsuario.fecha_nacimiento = fecha_nacimiento;
+    entidadUsuario.telefono = telefono;
+    entidadUsuario.fecha_nacimiento = new Date(fecha_nacimiento);
 
     await entidadUsuario.save({fields:["nombre","apellido_materno","apellido_paterno"
     ,"antecedentes_congenitos","antecedentes_familiares","fecha_nacimiento"]});

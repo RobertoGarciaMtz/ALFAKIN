@@ -15,7 +15,8 @@ exports.eliminarConsultaPorId = async (req,res,next)=> {
   const entidadConsulta = await consultastabla.findByPk(consultaId);
 
   if(entidadConsulta === null){
-    res.status(404).json({"razon":"No se encontro el recurso "+consultaId})
+    res.status(404).json({"razon":"No se encontro el recurso "+consultaId});
+    return;
   }
 
   const entidadPadecimiento = await padecimientostabla.findByPk(entidadConsulta.id_padecimiento_consulta);
@@ -38,7 +39,8 @@ exports.editarDatosConsultaPorUsuario = async (req,res,next) => {
   const entidadConsulta = await consultastabla.findOne({where:{id_padecimiento_consulta: padecimientoId}});
 
   if(entidadPadecimiento === null || entidadConsulta === null){
-     res.status(404).json({"razon":"No se encontro el recurso "+padecimientoId})
+     res.status(404).json({"razon":"No se encontro el recurso "+padecimientoId});
+     return;
   }
 
   entidadPadecimiento.Razon = razon;
@@ -116,7 +118,7 @@ exports.crearConsultaPadacimiento = async(req,res,next) => {
     Tratamiento:req.body.tratamiento
   });
 
-  if(nuevoPadecimiento == undefined){
+  if(nuevoPadecimiento === undefined){
     throw new Error("No se pudo crear el nuevo padecimiento");
   }
 
