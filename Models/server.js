@@ -3,6 +3,7 @@ const padecimientostabla = require('./Padecimientos.model');
 const consultasTabla = require('./Consultas.model');
 const usuariostabla = require('./User.model');
 const SequelizeDB = require('./connection');
+const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const {validarToken,addHeaders} = require('../middlewares/middlewares');
 
@@ -31,7 +32,8 @@ class Server {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(validarToken);
-        this.app.use(addHeaders);        
+        this.app.use(addHeaders);
+        this.app.use(methodOverride('_method')); 
     }
 
     rutas(){

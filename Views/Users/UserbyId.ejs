@@ -42,10 +42,14 @@
         }
     </style>
     <script>
-        function redirectToUser(userId) {
+        function redirectToConsultas(userId) {
             window.location.href = "/consultas/"+userId;
         }
-    </script>  
+
+        function redirectToEdit(userId) {
+            window.location.href = "/usuarios/userbyEditV/"+userId;
+        }
+    </script>
 </head>
 <body>
     <%- include('../header') %>
@@ -56,10 +60,12 @@
             <p><strong>Apellidos:</strong> <%= User.apellido_paterno %> <%= User.apellido_materno %></p>
             <p><strong>Antecedentes Congénitos:</strong> <%= User.antecedentes_congenitos %></p>
             <p><strong>Antecedentes Familiares:</strong> <%= User.antecedentes_familiares %></p>
+            <p><strong>Telefono:</strong> <%= User.telefono %></p>
             <p><strong>Edad:</strong> <%= User.Edad %></p>
             <p><strong>Sexo:</strong> <%= User.Sexo %></p>
         </div>
-        <button onclick="redirectToUser('<%= User.id_usuario %>')">Ver consultas</button>
+        <button onclick="redirectToEdit('<%= User.id_usuario %>')">Editar</button>
+        <button onclick="redirectToConsultas('<%= User.id_usuario %>')">Ver consultas</button>
     </div>
 </body>
 </html>

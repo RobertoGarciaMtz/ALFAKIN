@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="/css/edit-user.css">
+    <style>
+        /* public/css/edit-user.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+.logo {
+    height: 50px;
+}
+
+.edit-user-container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.edit-user-title {
+    text-align: center;
+    color: #333;
+}
+
+.edit-user-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-user-label {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.edit-user-input, .edit-user-textarea {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.edit-user-textarea {
+    height: 100px; 
+    resize: vertical;
+}
+
+.edit-user-button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-user-button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+    <%- include('../header') %>
+    <div class="edit-user-container">
+        <h1 class="edit-user-title">Edit User</h1>
+        <form action="/usuarios/editarUsuario/<%= entidadUsuario.id_usuario %>?_method=PUT" method="post" class="edit-user-form">
+            <label for="nombre" class="edit-user-label">Nombre</label>
+            <input type="text" id="nombre" name="nombre" value="<%= entidadUsuario.nombre %>" class="edit-user-input">
+
+            <label for="apellido_paterno" class="edit-user-label">Apellido Paterno</label>
+            <input type="text" id="apellido_paterno" name="apellido_paterno" value="<%= entidadUsuario.apellido_paterno %>" class="edit-user-input">
+
+            <label for="apellido_materno" class="edit-user-label">Apellido Materno</label>
+            <input type="text" id="apellido_materno" name="apellido_materno" value="<%= entidadUsuario.apellido_materno %>" class="edit-user-input">
+
+            <label for="antecedentes_congenitos" class="edit-user-label">Antecedentes Congénitos</label>
+            <textarea id="antecedentes_congenitos" name="antecedentes_congenitos" class="edit-user-textarea"><%= entidadUsuario.antecedentes_congenitos %></textarea>
+
+            <label for="antecedentes_familiares" class="edit-user-label">Antecedentes Familiares</label>
+            <textarea id="antecedentes_familiares" name="antecedentes_familiares" class="edit-user-textarea"><%= entidadUsuario.antecedentes_familiares %></textarea>
+
+            <label for="telefono" class="edit-user-label">Teléfono</label>
+            <input type="text" id="telefono" name="telefono" value="<%= entidadUsuario.telefono %>" class="edit-user-input">
+
+            <label for="fecha_nacimiento" class="edit-user-label">Fecha de Nacimiento</label>
+            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="<%= entidadUsuario.fecha_nacimiento %>" class="edit-user-input">
+
+            <button type="submit" class="edit-user-button">Guardar Cambios</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -46,6 +46,14 @@
     background-color: #45a049;
 }
 
+.textarea-custom {
+    height: 100px; 
+    resize: vertical;
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
 body {
     font-family: Arial, sans-serif;

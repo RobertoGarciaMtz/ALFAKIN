@@ -7,6 +7,7 @@ router.post('/createuserM',userController.registerusersMethod);
 router.get('/usersList',userController.usersListView);
 router.get('/userbyId/:userId',userController.findUserbyId);
 router.get('/userNewOld',userController.userViewNO);
+router.get('/userbyEditV/:userId',userController.UserEditView);
 router.put('/editarUsuario/:userId',userController.editarUsuario);
 router.delete('/eliminarUsuario/:userId',userController.eliminarUsuario);
 module.exports = router;

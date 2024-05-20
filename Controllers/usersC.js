@@ -25,6 +25,7 @@ exports.registerusersMethod = async (req,res,next) =>{
       antecedentes_familiares:  req.body.antecedentes_familiares,
       fecha_nacimiento: req.body.fecha_nacimiento,
       Sexo: req.body.Sexo,
+      telefono: req.body.telefono,
       Rol: "Client",
       contrasena
     });
@@ -57,8 +58,17 @@ exports.eliminarUsuario = async (req,res,next) => {
   res.status(200).json({"msg":"El registro se elimino correctamente"});
 }
 
-exports.editarUsuario = async (req,res,next) => {
+exports.UserEditView = async (req,res,next) =>{
+  const idUsuario = req.params.userId;
+  const entidadUsuario = await usuariostabla.findByPk(idUsuario);
+  if(entidadUsuario === null){
+    return res.status(404).json({"razon":"No se encontro el recurso "+idUsuario});
+  }
+  return  await res.render('Users/UserEdit',{entidadUsuario});
+}
 
+exports.editarUsuario = async (req,res,next) => {
+console.log("No entra este pedo");
     const idUsuario = req.params.userId;
 
     const entidadUsuario = await usuariostabla.findByPk(idUsuario);
