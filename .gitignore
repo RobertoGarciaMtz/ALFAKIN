@@ -1,5 +1,7 @@
 node_modules/
 Modelo de BD.png
 UTILIDADES
-models/server.js
-.\app.js
+.env
+/pacakge-lock.json
+\package-lock.json
+package-lock.json

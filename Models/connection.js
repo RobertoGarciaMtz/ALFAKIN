@@ -26,25 +26,39 @@ class ConnectionBD {
      */
     establecerRelaciones(Usuarios, Consultas, Padecimientos){
 
-        Usuarios.hasMany(Consultas, {
-            foreignKey: "id_consulta_usuario",
-            sourceKey: "id_usuario"
+        Usuarios.hasMany(Consultas,{
+            foreignKey:"id_consulta_usuario",
+           sourceKey:"id_usuario" 
         });
+
+        Padecimientos.hasOne(Consultas,{
+            foreignKey:"id_padecimiento_consulta",
+            sourceKey:"id_padecimiento"
+        });
+        Consultas.belongsTo(Usuarios,{foreignKey:"id_consulta_usuario",targetId:"id_usuario" });
+
+        Consultas.belongsTo(Padecimientos,{foreignKey:"id_padecimiento_consulta",targetId:"id_padecimiento" });
     
-        Padecimientos.hasOne(Consultas, {
-            foreignKey: "id_padecimiento_consulta",
-            sourceKey: "id_padecimiento"
-        });
+
+        // Usuarios.hasMany(Consultas, {
+        //     foreignKey: "id_consulta_usuario",
+        //     sourceKey: "id_usuario"
+        // });
     
-        Consultas.belongsTo(Usuarios, {
-            foreignKey: "id_consulta_usuario",
-            targetKey: "id_usuario"
-        });
+        // Padecimientos.hasOne(Consultas, {
+        //     foreignKey: "id_padecimiento_consulta",
+        //     sourceKey: "id_padecimiento"
+        // });
     
-        Consultas.belongsTo(Padecimientos, {
-            foreignKey: "id_padecimiento_consulta",
-            targetKey: "id_padecimiento"
-        });
+        // Consultas.belongsTo(Usuarios, {
+        //     foreignKey: "id_consulta_usuario",
+        //     targetKey: "id_usuario"
+        // });
+    
+        // Consultas.belongsTo(Padecimientos, {
+        //     foreignKey: "id_padecimiento_consulta",
+        //     targetKey: "id_padecimiento"
+        // });
     }
 }
 
