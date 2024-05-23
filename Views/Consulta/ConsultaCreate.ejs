@@ -63,6 +63,40 @@
         .form input[type="submit"]:hover {
             background-color: #0056b3;
         }
+        select {
+            appearance: none;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="none" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px 16px;
+        }
+        input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+.custom-date {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    appearance: none;
+    background-color: #fff;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="none" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
+    padding-right: 30px;
+}
     </style>
 </head>
 <body>
@@ -79,18 +113,21 @@
             <p><strong>Sexo:</strong> <%= User.Sexo %></p>
         </div>
         <div class="form">
-            <h2>Llenar Detalles</h2>
+            <h2>Detalles Consulta</h2>
             <form action="/consultas/" method="post">
-                <input type="hidden"id="id_usuario" name="id_usuario" value='<%= User.id_usuario %>'>
-                <input type="hidden"id="fechaSesion" name="fechaSesion">
-                <div class="form">
+                <div>
                     <label for="TipoCita" class="user-create-label">Tipo de Cita:</label>
                     <select id="tipoCita" name="tipoCita"required>
                         <option value="">Seleccionar</option>
                         <option value="Domicilio">A domicilio</option>
                         <option value="Consultorio">Consultorio</option>
                     </select>
+                    <label class="user-create-label" for="fechaSesion">Fecha de Sesion:</label>
+                    <input type="date" id="fechaSesion" name="fechaSesion" class="custom-date" required>
                 </div>
+                <h2>Detalles de la sesion</h2>
+                <input type="hidden"id="id_usuario" name="id_usuario" value='<%= User.id_usuario %>'>
+
                 <label for="Tipotratamiento">Tipo de tratamiento:</label>
                 <input type="text" id="tipoTratamiento" name="tipoTratamiento" required>
 

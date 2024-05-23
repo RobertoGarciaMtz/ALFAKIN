@@ -17,7 +17,7 @@ exports.registerusersView =  (req, res, next) => {
 exports.registerusersMethod = async (req,res,next) =>{
   try{
     const contrasena = await generarContrasena("contrasena");
-    await usuariostabla.create({
+    const newUser = await usuariostabla.create({
       nombre: req.body.nombre,
       apellido_paterno:  req.body.apellido_paterno,
       apellido_materno:  req.body.apellido_materno,
@@ -118,6 +118,34 @@ console.log("No entra este pedo");
 
     return res.status(200).json({"mensaje":"El registro ha sido actualizado correctamente"});
 
+}
+
+exports.existinguserView = async (req,res,next) =>{
+  await res.render('Users/ExistingUser');
+  return;
+}
+exports.searchfilters = async (req,res,next) => {
+  const { nombre, apellido_paterno, apellido_materno, telefono } = req.query;
+  let toFindre4 = [];
+  if(nombre != null){
+    toFindre4.push({ nombre: nombre });
+  }
+  if(apellido_paterno != null){
+    toFindre4.push({ apellido_paterno: apellido_paterno });
+  }
+  if(apellido_materno != null){
+    toFindre4.push({ apellido_materno: apellido_materno });
+  }
+  if(telefono != null){
+    toFindre4.push({ telefono: telefono });
+  }
+  const usersList = await usuariostabla.findAll({
+    where: {
+      [Op.and]: toFindre4
+    }
+  });
+  console.log(nombre, apellido_paterno, apellido_materno, telefono);
+  return res.redirect("usersList");
 }
 
 exports.usersListView = async (req, res, next) => {

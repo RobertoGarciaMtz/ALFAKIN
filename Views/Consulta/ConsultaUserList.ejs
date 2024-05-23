@@ -68,6 +68,13 @@
         function redirectToUser(padecimientoId) {
             window.location.href = "/padecimientos/"+padecimientoId;
         }
+        function redirectToConsultas(userId) {
+            window.location.href = "/consultas/"+userId;
+        }
+
+        function redirectToEdit(userId) {
+            window.location.href = "/usuarios/userbyEditV/"+userId;
+        }
     </script>  
 </head>
 <body>
@@ -82,6 +89,8 @@
             <p><strong>Fecha de Nacimiento:</strong> <%= consultasList.Edad %></p>
             <p><strong>Sexo:</strong> <%= consultasList.Sexo %></p>
         </div>
+        <button onclick="redirectToEdit('<%= consultasList.id_usuario %>')">Editar</button>
+        <button onclick="redirectToConsultas('<%= consultasList.id_usuario %>')">Ver consultas</button>
         <h1>Consultas previas</h1>
         <table>
             <thead>
