@@ -37,6 +37,32 @@ exports.registerusersMethod = async (req,res,next) =>{
   }
 };
 
+
+exports.crearUsuarioMedico = async (req,res,next) =>{
+  try{
+    const contrasena = await generarContrasena("contrasena");
+    await usuariostabla.create({
+      nombre: req.body.nombre,
+      apellido_paterno:  req.body.apellido_paterno,
+      apellido_materno:  req.body.apellido_materno,
+      antecedentes_congenitos:  req.body.antecedentes_congenitos,
+      antecedentes_familiares:  req.body.antecedentes_familiares,
+      fecha_nacimiento: req.body.fecha_nacimiento,
+      Sexo: req.body.Sexo,
+      telefono: req.body.telefono,
+      Rol: "Medico",
+      contrasena
+    });
+
+    return res.json({"msg":"El registro se ha creado correctamente"});
+
+  } catch(err){
+    console.log(err)
+    return res.json({"msg": "Ha habido un problema en la creacion del usuario"});
+  }
+};
+
+
 exports.eliminarUsuario = async (req,res,next) => {
   const idUsuario = req.params.userId;
   console.log(idUsuario);

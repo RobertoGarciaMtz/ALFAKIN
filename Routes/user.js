@@ -10,4 +10,5 @@ router.get('/userNewOld',userController.userViewNO);
 router.get('/userbyEditV/:userId',userController.UserEditView);
 router.put('/editarUsuario/:userId',userController.editarUsuario);
 router.delete('/eliminarUsuario/:userId',userController.eliminarUsuario);
+router.post('/crearUsuarioMedico',userController.crearUsuarioMedico);
 module.exports = router;
