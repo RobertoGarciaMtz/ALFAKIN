@@ -29,6 +29,9 @@
         function redirectToUser(userId) {
             window.location.href = "/usuarios/userbyId/"+userId;
         }
+        function redirectToConsulta(userId) {
+            window.location.href = "/consultas/crearconsultaV/"+userId;
+        }
     </script>  
 </head>
 <body>
@@ -50,6 +53,7 @@
                     <th>Age</th>
                     <th>Sexo</th>
                     <th>Buscar</th>
+                    <th>Consulta</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,7 +66,10 @@
                         <td><%= user.Edad %></td>
                         <td><%= user.Sexo%></td>
                         <td>
-                            <button onclick="redirectToUser('<%= user.id_usuario %>')">Buscar</button>
+                            <button onclick="redirectToUser('<%= user.id_usuario %>')">Detalles</button>
+                        </td>
+                        <td>
+                            <button onclick="redirectToConsulta('<%= user.id_usuario %>')">Nueva Consulta</button>
                         </td>
                     </tr>
                 <% }); %>

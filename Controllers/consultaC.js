@@ -4,8 +4,22 @@ const padecimientostabla = require('../models/Padecimientos.model');
 const {calculateAge} = require("../utils/FuncionesUtils.js");
 
 exports.registrarConsultaVista = async (req, res, next) => {
-  const  User = await usuariostabla.findByPk("2a5d9c10-58b5-4c31-8556-7a5bbc21e5e8");
-    res.render('Consulta/ConsultaCreate',{User});
+  
+  if (req.params.userId == null || req.params.userId == undefined){
+    const  User = await usuariostabla.findOne({where:{
+      Rol: "Admin"
+    }});
+    return await res.render('Consulta/ConsultaCreate',{User});
+  }
+  else {
+    try{
+      const userId = req.params.userId;
+    const  User = await usuariostabla.findByPk(userId);
+    return await res.render('Consulta/ConsultaCreate',{User});
+    } catch (Error){
+      console.log(Error);
+    }  
+  }
   };
 
 
@@ -97,8 +111,10 @@ exports.consultaConUsuario = async(req,res,next) => {
       }
     }]
   });
-  consultasList[0].Edad = calculateAge(consultasList[0].fecha_nacimiento);
-  res.render("consulta/ConsultaUserList",{consultasList:consultasList[0]});
+  //console.log(consultasList[0].fecha_nacimiento);
+  //consultasList[0].Edad = await calculateAge(consultasList[0].fecha_nacimiento);
+   await res.render("consulta/ConsultaUserList",{consultasList:consultasList[0]});
+   return;
 };
 
 /**
@@ -131,7 +147,7 @@ exports.crearConsultaPadacimiento = async(req,res,next) => {
     id_consulta_usuario: req.body.id_usuario,
     id_padecimiento_consulta: nuevoPadecimiento.id_padecimiento
   });
-
+  return await res.redirect('/'+req.body.id_usuario);
   res.json(nuevaConsulta);
 
 };

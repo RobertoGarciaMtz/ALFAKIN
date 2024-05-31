@@ -2,6 +2,7 @@ const express = require('express');
 const padecimientostabla = require('./Padecimientos.model');
 const consultasTabla = require('./Consultas.model');
 const usuariostabla = require('./User.model');
+const pagostabla = require('./Pagos.model');
 const SequelizeDB = require('./connection');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
@@ -46,7 +47,7 @@ class Server {
 
     crearConexiones(){
         const db = new SequelizeDB();
-        db.establecerRelaciones(usuariostabla,consultasTabla, padecimientostabla);
+        db.establecerRelaciones(usuariostabla,consultasTabla, padecimientostabla,pagostabla);
     }
 
     listen() {

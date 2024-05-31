@@ -1,17 +1,17 @@
-const {Sequelize, Model} = require('sequelize');
+const { Sequelize, Model } = require('sequelize');
 //const enviroment = require('dotenv').config();// /*dejae esta linea comentada */
 class ConnectionBD {
 
-    constructor(){
+    constructor() {
         this.db = process.env.DATABASE;
         this.usr = process.env.USERNAMEBD;
         this.pswd = process.env.PASSWORD;
         this.conexion = this.establecerConexion();
-       
+
 
     }
 
-    establecerConexion(){
+    establecerConexion() {
         return new Sequelize(this.db, this.usr, this.pswd, {
             host: 'localhost',
             dialect: 'mysql'
@@ -24,37 +24,44 @@ class ConnectionBD {
      * @param {Model} Consultas
      * @param {Model} Padecimientos  
      */
-    establecerRelaciones(Usuarios, Consultas, Padecimientos){
+    establecerRelaciones(Usuarios, Consultas, Padecimientos,Pagos) {
 
-        Usuarios.hasMany(Consultas,{
-            foreignKey:"id_consulta_usuario",
-           sourceKey:"id_usuario" 
+        Usuarios.hasMany(Consultas, {
+            foreignKey: "id_consulta_usuario",
+            sourceKey: "id_usuario"
         });
 
-        Padecimientos.hasOne(Consultas,{
-            foreignKey:"id_padecimiento_consulta",
-            sourceKey:"id_padecimiento"
+        Padecimientos.hasOne(Consultas, {
+            foreignKey: "id_padecimiento_consulta",
+            sourceKey: "id_padecimiento"
         });
-        Consultas.belongsTo(Usuarios,{foreignKey:"id_consulta_usuario",targetId:"id_usuario" });
 
-        Consultas.belongsTo(Padecimientos,{foreignKey:"id_padecimiento_consulta",targetId:"id_padecimiento" });
-    
+        Consultas.hasOne(Pagos, { 
+            foreignKey: "id_pago_consulta", 
+            sourceKey: "id_consulta" 
+        });
+
+        Consultas.belongsTo(Usuarios, { foreignKey: "id_consulta_usuario", targetId: "id_usuario" });
+
+        Consultas.belongsTo(Padecimientos, { foreignKey: "id_padecimiento_consulta", targetId: "id_padecimiento" });
+
+        Pagos.belongsTo(Consultas, { foreignKey: "id_pago_consulta", targetId: "id_pago" });
 
         // Usuarios.hasMany(Consultas, {
         //     foreignKey: "id_consulta_usuario",
         //     sourceKey: "id_usuario"
         // });
-    
+
         // Padecimientos.hasOne(Consultas, {
         //     foreignKey: "id_padecimiento_consulta",
         //     sourceKey: "id_padecimiento"
         // });
-    
+
         // Consultas.belongsTo(Usuarios, {
         //     foreignKey: "id_consulta_usuario",
         //     targetKey: "id_usuario"
         // });
-    
+
         // Consultas.belongsTo(Padecimientos, {
         //     foreignKey: "id_padecimiento_consulta",
         //     targetKey: "id_padecimiento"

@@ -127,16 +127,16 @@ exports.existinguserView = async (req,res,next) =>{
 exports.searchfilters = async (req,res,next) => {
   const { nombre, apellido_paterno, apellido_materno, telefono } = req.query;
   let toFindre4 = [];
-  if(nombre != null){
+  if(nombre != ""){
     toFindre4.push({ nombre: nombre });
   }
-  if(apellido_paterno != null){
+  if(apellido_paterno != ""){
     toFindre4.push({ apellido_paterno: apellido_paterno });
   }
-  if(apellido_materno != null){
+  if(apellido_materno != ""){
     toFindre4.push({ apellido_materno: apellido_materno });
   }
-  if(telefono != null){
+  if(telefono != ""){
     toFindre4.push({ telefono: telefono });
   }
   const usersList = await usuariostabla.findAll({
@@ -144,8 +144,7 @@ exports.searchfilters = async (req,res,next) => {
       [Op.and]: toFindre4
     }
   });
-  console.log(nombre, apellido_paterno, apellido_materno, telefono);
-  return res.redirect("usersList");
+  return await res.render('Users/UserList',{user:usersList});
 }
 
 exports.usersListView = async (req, res, next) => {

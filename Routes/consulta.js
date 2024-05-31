@@ -3,7 +3,7 @@ const express = require('express');
 const consultaController = require("../Controllers/consultaC");
 const router = express.Router();
 
-router.get('/crearconsultaV',consultaController.registrarConsultaVista);
+router.get('/crearconsultaV/:userId',consultaController.registrarConsultaVista);
 router.get('/:userId',consultaController.consultaConUsuario);
 router.post('/',consultaController.crearConsultaPadacimiento);
 router.put('/:padecimientoId',consultaController.editarDatosConsultaPorUsuario);
