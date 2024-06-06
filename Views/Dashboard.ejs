@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
         }
-        
+
         #clock {
             font-size: 2em;
             margin-top: 50px;
@@ -27,6 +27,7 @@
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
+            cursor: pointer; /* Hacer que los días sean clicables */
         }
 
         #calendar th {
@@ -35,7 +36,7 @@
     </style>
 </head>
 <body>
-    
+
 <%- include('header') %>
     <h1>Calendario de citas ALFAKINE</h1>
     <div id="clock"></div>
@@ -60,21 +61,6 @@
     </table>
 
     <script>
-        // Función para actualizar el reloj
-        function updateClock() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-        }
-
-        // Actualizar el reloj cada segundo
-        setInterval(updateClock, 1000);
-
-        // Actualizar el reloj cuando se carga la página
-        updateClock();
-
         // Función para obtener el número de días en un mes específico
         function daysInMonth(month, year) {
             return new Date(year, month, 0).getDate();
@@ -92,18 +78,28 @@
             let dayCount = 1;
             tbody.innerHTML = '';
 
+            // Ajustar el primer día de la semana (0: Domingo, 6: Sábado)
+            const adjustedFirstDayOfMonth = (firstDayOfMonth + 6) % 7;
+
             for (let i = 0; i < 6; i++) {
                 const row = document.createElement('tr');
 
                 for (let j = 0; j < 7; j++) {
-                    if (i === 0 && j < firstDayOfMonth) {
-                        const cell = document.createElement('td');
+                    const cell = document.createElement('td');
+
+                    if (i === 0 && j < adjustedFirstDayOfMonth) {
                         row.appendChild(cell);
                     } else if (dayCount <= daysInCurrentMonth) {
-                        const cell = document.createElement('td');
-                        cell.textContent = dayCount;
+                        const currentDay = dayCount; // Capturar el valor actual de dayCount
+                        cell.textContent = currentDay;
+                        cell.addEventListener('click', function() {
+                            const newUrl = `/consultas/consultaDia/${currentDay}`;
+                            window.location.href = newUrl;
+                        });
                         row.appendChild(cell);
                         dayCount++;
+                    } else {
+                        row.appendChild(cell);
                     }
                 }
 

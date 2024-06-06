@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles del Usuario</title>
+    <title>Detalles del paciente</title>
     <style>
         /* Estilos CSS */
         body {
@@ -103,7 +103,7 @@ select {
     <%- include('../header') %>
     <div class="details">
         <div class="details">
-            <h2>Detalles del Usuario</h2>
+            <h2>Detalles del paciente</h2>
             <p><strong>Nombre:</strong> <%= User.nombre %></p>
             <p><strong>Apellido:</strong> <%= User.apellido_paterno %></p>
             <p><strong>Apellido:</strong> <%= User.apellido_materno %></p>
@@ -114,7 +114,7 @@ select {
         </div>
         <div class="form">
             <h2>Detalles Consulta</h2>
-            <form action="/consultas/" method="post">
+            <form action='/consultas/' method="post">
                 <div>
                     <label for="TipoCita" class="user-create-label">Tipo de Cita:</label>
                     <select id="tipoCita" name="tipoCita"required>
@@ -123,28 +123,28 @@ select {
                         <option value="Consultorio">Consultorio</option>
                     </select>
                     <label class="user-create-label" for="fechaSesion">Fecha de Sesion:</label>
-                    <input type="date" id="fechaSesion" name="fechaSesion" class="custom-date" required>
+                    <input type="datetime-local" id="fechaSesion" name="fechaSesion" class="custom-date" required>
                 </div>
                 <h2>Detalles de la sesion</h2>
                 <input type="hidden"id="id_usuario" name="id_usuario" value='<%= User.id_usuario %>'>
 
                 <label for="Tipotratamiento">Tipo de tratamiento:</label>
-                <input type="text" id="tipoTratamiento" name="tipoTratamiento" required>
+                <input type="text" id="tipoTratamiento" name="tipoTratamiento" value="Llenar dia de consulta" required>
 
                 <label for="Razon">Razon:</label>
-                <input type="text" id="razon" name="razon" required>
+                <input type="text" id="razon" name="razon" value="Llenar dia de consulta" required>
 
                 <label for="Zona_dolor">Zona de dolor:</label>
-                <input type="text" id="zdolor" name="zdolor" required>
+                <input type="text" id="zdolor" name="zdolor" value="Llenar dia de consulta" required>
 
                 <label for="Comentarios">Comentarios:</label>
-                <textarea id="comentarios" name="comentarios" rows="4" required></textarea>
+                <textarea id="comentarios" name="comentarios" value="Llenar dia de consulta" rows="4" required></textarea>
 
                 <label for="Recomendaciones">Recomendaciones:</label>
-                <textarea id="recomendaciones" name="recomendaciones" rows="4" required></textarea>
+                <textarea id="recomendaciones" name="recomendaciones" value="Llenar dia de consulta" rows="4" required></textarea>
 
                 <label for="Tratamiento">Tratamiento:</label>
-                <textarea id="tratamiento" name="tratamiento" rows="4" required></textarea>
+                <textarea id="tratamiento" name="tratamiento" value="Llenar dia de consulta" rows="4" required></textarea>
 
                 <input type="submit" value="Guardar Detalles">
             </form>

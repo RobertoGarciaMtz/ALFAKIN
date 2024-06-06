@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles del Usuario</title>
+    <title>Detalles del Paciente</title>
     <style>
         /* Estilos CSS */
         body {
@@ -78,13 +78,19 @@
         function redirectToRegisterConsulta(userId) {
             window.location.href = "/consultas/crearconsultaV/"+userId;
         }
+        function redirectToDeleteConsulta(id_consulta) {
+            const url = `/consultas/eliminarConsulta/${id_consulta}`;
+            fetch(url, {
+                method: 'DELETE'
+            })
+        }
     </script>  
 </head>
 <body>
     <%- include('../header') %>
     <div class="container">
         <div class="details">
-            <h2>Detalles del Usuario</h2>
+            <h2>Detalles del paciente</h2>
             <p><strong>Nombre:</strong> <%= consultasList.nombre %></p>
             <p><strong>Apellido:</strong> <%= consultasList.apellido_paterno %> <%= consultasList.apellido_materno %></p>
             <p><strong>Antecedentes Congénitos:</strong> <%= consultasList.antecedentes_congenitos %></p>
@@ -95,7 +101,7 @@
         </div>
         <button onclick="redirectToEdit('<%= consultasList.id_usuario %>')">Editar</button>
         <button onclick="redirectToConsultas('<%= consultasList.id_usuario %>')">Ver consultas</button>
-        <button onclick="redirectToRegisterConsulta('<%= consultasList.id_usuario %>')">Nueva Consulta</button>
+        <button onclick="redirectToRegisterConsulta('<%= consultasList.id_usuario %>')">Agendar Consulta</button>
         <h1>Consultas previas</h1>
         <table>
             <thead>
@@ -104,6 +110,7 @@
                     <th>Tipo Cita</th>
                     <th>Tratamiento</th>
                     <th>Especificaciones</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -114,6 +121,9 @@
                         <td><%= item.tipo_tratamiento %></td>
                         <td>
                             <button onclick="redirectToUser('<%= item.id_padecimiento_consulta %>')">Ver Padecimiento</button>
+                        </td>
+                        <td>
+                            <button onclick="redirectToDeleteConsulta('<%= item.id_consulta %>')">Eliminar Consulta</button>
                         </td>
                     </tr>
                 <% }); %>

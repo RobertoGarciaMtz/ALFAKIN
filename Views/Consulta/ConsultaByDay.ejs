@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Citas</title>
+    <style>
+        /* public/styles.css */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.citas-table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+.citas-table th, .citas-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.citas-table th {
+    background-color: #f2f2f2;
+}
+
+.citas-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.citas-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+    </style>
+</head>
+<body>
+    <%- include('../header') %>
+    <h1>Lista de Citas</h1>
+    <table class="citas-table">
+        <thead>
+            <tr>
+                <th>Fecha y Hora</th>
+                <th>Encargado</th>
+                <th>Tipo de Cita</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% listaConsultas.forEach(function(cita) { %>
+                <tr>
+                    <td><%= new Date(cita.fecha_sesion).toLocaleString() %></td>
+                    <td><%= cita.tipo_cita %></td>
+                    <td><%= cita.tipo_cita %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>

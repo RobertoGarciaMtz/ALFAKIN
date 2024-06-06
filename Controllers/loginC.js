@@ -1,6 +1,8 @@
 const usuariostabla = require('../Models/User.model');
 const {validarContrasena} = require("../utils/UtilsPassword.js");
 const {crearToken} = require("../utils/tokenUtils.js");
+const consultastabla = require('../models/Consultas.model');
+const moment = require('moment');
 
 exports.loginView =  (req, res, next) => {
     const {err = ""} = req.query; 
@@ -36,7 +38,48 @@ exports.loginAuth = async (req, res,next) =>{
   
 } 
 
-exports.dashboardview = (req,res,next) => {
-  
-  res.render('Dashboard');
+exports.dashboardview =  async (req,res,next) => {
+  let fecha;
+  const day = moment().format('MM');
+  switch (day) {
+    case '01':
+      fecha = moment().format('Enero-YYYY');
+      break;
+    case '02':
+      fecha = moment().format('Febrero-YYYY');
+      break;
+    case '03':
+      fecha = moment().format('Marzo-YYYY');
+      break;
+    case '04':
+      fecha = moment().format('Abril-YYYY');
+      break;
+    case '05':
+      fecha = moment().format('Mayo-YYYY');
+      break;
+    case '06':
+      fecha = moment().format('Junio-YYYY');
+      break;
+    case '07':
+      fecha = moment().format('Julio-YYYY');
+      break;
+    case '08':
+      fecha = moment().format('Agosto-YYYY');
+      break;
+    case '09':
+      fecha = moment().format('Septiembre-YYYY');
+      break
+    case '10':
+      fecha = moment().format('Octubre-YYYY');
+      break;
+    case '11':
+      fecha = moment().format('Noviembre-YYYY');
+      break;
+    case '12':
+      fecha = moment().format('Diciembre-YYYY');
+      break;
+    default:
+      dayName = 'Desconocido';
+  }
+  return res.render('Dashboard',{Fecha:fecha});
 }

@@ -2,6 +2,8 @@ const usuariostabla = require('../models/User.model');
 const consultastabla = require('../models/Consultas.model');
 const padecimientostabla = require('../models/Padecimientos.model');
 const {calculateAge} = require("../utils/FuncionesUtils.js");
+const moment = require('moment');
+const { Op } = require('sequelize');
 
 exports.registrarConsultaVista = async (req, res, next) => {
   
@@ -37,9 +39,9 @@ exports.eliminarConsultaPorId = async (req,res,next)=> {
 
   await entidadConsulta.destroy();
   await entidadPadecimiento.destroy();
-  
+  // TERMINAR PARA QUE MUESTRE EL MENSAJE
   res.status(200).json({"mensaje":"El registro se ha eliminado correctamente"});
-
+  return;
 }
 
 exports.editarDatosConsultaPorUsuario = async (req,res,next) => {
@@ -106,8 +108,11 @@ exports.consultaConUsuario = async(req,res,next) => {
     offset: 10*pagina,
     include: [{
       model: consultastabla,
+      order: [
+        ['fecha_sesion', 'ASC'],
+      ],
       include:{
-        model: padecimientostabla
+        model: padecimientostabla,
       }
     }]
   });
@@ -147,7 +152,23 @@ exports.crearConsultaPadacimiento = async(req,res,next) => {
     id_consulta_usuario: req.body.id_usuario,
     id_padecimiento_consulta: nuevoPadecimiento.id_padecimiento
   });
-  return await res.redirect('/'+req.body.id_usuario);
+  return await res.redirect('/consultas/'+req.body.id_usuario);
   res.json(nuevaConsulta);
-
 };
+
+
+exports.consultaPorDia = async (req,res,next) => {
+  const dia = req.params.diaId;
+  const startOfday = moment().format('YYYY-MM-'+dia+' 00:10');
+  const endOfday   = moment().format('YYYY-MM-'+dia+' 23:50');
+  const listaConsultas = await consultastabla.findAll({
+    where: {
+      fecha_sesion: { [Op.between]: [startOfday, endOfday] }
+    },
+    attributes: ['fecha_sesion','tipo_cita'],
+    order: [
+      ['fecha_sesion', 'DESC'],
+  ],
+  });  
+  return  await res.render('consulta/ConsultaByDay',{listaConsultas});
+}

@@ -9,7 +9,7 @@
 <body>
     <%- include('../header') %>
     <div class="user-create-container">
-        <h2>Crear Usuario</h2>
+        <h2>Registrar paciente</h2>
         <form action="/usuarios/createuserM" method="post">
             <div class="user-create-form-group">    
                 <label for="nombre" class="user-create-label">Nombre:</label>
@@ -41,7 +41,7 @@
                 <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="user-create-input" required>
             </div>
             <div class="user-create-form-group">
-                <label for="Antecedentes_congenitos" class="user-create-label">Antecedentes congenitos:</label>
+                <label for="Antecedentes_congenitos" class="user-create-label">Antecedentes congenitos/Alergias:</label>
                 <input type="text" id="antecedentes_congenitos" name="antecedentes_congenitos" class="user-create-input" required>
             </div>
             <div class="user-create-form-group">
