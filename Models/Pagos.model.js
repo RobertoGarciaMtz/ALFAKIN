@@ -15,9 +15,9 @@ const Pagos = db.conexion.define("Pagos",
     pagado: {
       type: DataTypes.BOOLEAN
     },
-    atendidopor: {
-      type: DataTypes.STRING(200)
-    }
+    tipopago: {
+      type: DataTypes.STRING(150),
+    },
   },
   {
     tablename: "Pagos",

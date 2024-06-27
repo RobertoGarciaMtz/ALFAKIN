@@ -32,16 +32,21 @@
         function redirectToConsulta(userId) {
             window.location.href = "/consultas/crearconsultaV/"+userId;
         }
-    </script>  
+        function redirectToSearch(){
+            window.location.href = "/usuarios/findUserbySpecV";
+        }
+        function redirectToInsert(){
+            window.location.href = "/usuarios/createuserV";
+        }
+    </script>
 </head>
 <body>
     <%- include('../header') %>
     <div class="user-list-container">
         <h2>Lista de Pacientes registrados</h2>
         <div class="user-list-search">
-            <input type="text" id="searchInput" placeholder="Buscar usuario...">
-            <button onclick="searchUser()">Buscar</button>           
-            <button onclick="searchUser()">Agregar</button>
+            <button onclick="redirectToSearch()">Buscar Paciente</button>      
+            <button onclick="redirectToInsert()">Registrar Paciente</button>          
         </div>
         <table class="user-list-table">
             <thead>

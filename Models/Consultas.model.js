@@ -17,7 +17,10 @@ const Consultas = db.conexion.define("Consultas",
     },
     tipo_tratamiento: {
       type: DataTypes.TEXT
-    }
+    },
+    atendidopor: {
+      type: DataTypes.STRING(200)
+    },
   },
   {
     tablename: "Consultas",

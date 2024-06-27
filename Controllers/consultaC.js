@@ -144,7 +144,6 @@ exports.crearConsultaPadacimiento = async(req,res,next) => {
   }
 
    let {fechaSesion} = req.body;
-   fechaSesion = new Date();
   const nuevaConsulta = await consultastabla.create({
     fecha_sesion: fechaSesion,
     tipo_cita: req.body.tipoCita,
@@ -169,6 +168,6 @@ exports.consultaPorDia = async (req,res,next) => {
     order: [
       ['fecha_sesion', 'DESC'],
   ],
-  });  
+  });
   return  await res.render('consulta/ConsultaByDay',{listaConsultas});
 }
