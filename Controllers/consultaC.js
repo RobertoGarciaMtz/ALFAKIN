@@ -1,12 +1,13 @@
 const usuariostabla = require('../models/User.model');
 const consultastabla = require('../models/Consultas.model');
 const padecimientostabla = require('../models/Padecimientos.model');
+const pagostabla = require('../models/Pagos.model');
 const {calculateAge} = require("../utils/FuncionesUtils.js");
 const moment = require('moment');
 const { Op } = require('sequelize');
 
 exports.registrarConsultaVista = async (req, res, next) => {
-  
+  let listafisios
   if (req.params.userId == null || req.params.userId == undefined){
     const  User = await usuariostabla.findOne({where:{
       Rol: "Admin"
@@ -16,7 +17,18 @@ exports.registrarConsultaVista = async (req, res, next) => {
   else {
     try{
       const userId = req.params.userId;
-    const  User = await usuariostabla.findByPk(userId);
+    const User = await usuariostabla.findByPk(userId,
+      {attributes:["nombre","apellido_paterno","apellido_materno","antecedentes_congenitos","antecedentes_familiares","Sexo","id_usuario"]}
+    );
+    /*let listafisios = await usuariostabla.findAll({
+      where:{Rol: "Fisioterapeuta"},
+      attributes:["nombre","apellido_paterno"]
+    });
+    if (listafisios.length === 0){
+      const objetodummy = {nombre:"Dummy",apellido_paterno:"Dummy2"};
+      listafisios.push(objetodummy);
+    }
+    User.lista = listafisios;*/
     return await res.render('Consulta/ConsultaCreate',{User});
     } catch (Error){
       console.log(Error);
@@ -151,6 +163,15 @@ exports.crearConsultaPadacimiento = async(req,res,next) => {
     id_consulta_usuario: req.body.id_usuario,
     id_padecimiento_consulta: nuevoPadecimiento.id_padecimiento
   });
+  const pagosbody = req.body.cantidad;
+  const pagadobody = req.body.pagado;
+  const tipopagobody = req.body.tipopago;
+  const nuevopago = await pagostabla.create({
+    cantidad: pagosbody,
+    pagado: pagadobody,
+    tipopago: tipopagobody,
+    id_pago_consulta: nuevaConsulta.id_consulta,
+  })
   return await res.redirect('/consultas/'+req.body.id_usuario);
   res.json(nuevaConsulta);
 };

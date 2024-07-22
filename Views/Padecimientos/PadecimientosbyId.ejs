@@ -12,12 +12,26 @@
         <h2>Nota Terapeutica</h2>
         <div class="padecimientos-list">
             <div class="padecimiento">
-                <p><strong>Razón:</strong> <%= padecimientoSpec.Razon %></p>
-                <p><strong>Zona de Dolor:</strong> <%= padecimientoSpec.Zona_dolor %></p>
-                <p><strong>Comentarios:</strong> <%= padecimientoSpec.Comentarios %></p>
-                <p><strong>Recomendaciones:</strong> <%= padecimientoSpec.Recomendaciones %></p>
-                <p><strong>Tratamiento:</strong> <%= padecimientoSpec.Tratamiento %></p>
+                <p><strong>Razón:</strong> <%= information.Padecimiento.Razon %></p>
+                <p><strong>Zona de Dolor:</strong> <%= information.Padecimiento.Zona_dolor %></p>
+                <p><strong>Comentarios:</strong> <%= information.Padecimiento.Comentarios %></p>
+                <p><strong>Recomendaciones:</strong> <%= information.Padecimiento.Recomendaciones %></p>
+                <p><strong>Tratamiento:</strong> <%= information.Padecimiento.Tratamiento %></p>
             </div>
+            <div class="padecimiento">
+                <h2>Detalles de pago</h2>
+                <% if (information.Pago == null) { %>
+                    <p><strong>Cantidad:</strong>0</p>
+                    <p><strong>Pagado:</strong> true</p>
+                    <p><strong>Tipo de pago:</strong>Pendiente</p>
+                <% } else { %>
+                    <p><strong>Cantidad:</strong> <%= information.Pago.cantidad %></p>
+                    <p><strong>Pagado:</strong> <%= information.Pago.pagado %></p>
+                    <p><strong>Tipo de pago:</strong> <%= information.Pago.tipopago %></p>
+                <% } %>
+            </div>
+        </div>
+        <div class="padecimientos-list">
         </div>
     </div>
 </body>

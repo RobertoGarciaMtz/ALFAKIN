@@ -43,18 +43,18 @@ exports.loginAuth = async (req, res,next) =>{
 exports.dashboardview =  async (req,res,next) => {
   const month = moment().format('MM');
   const meses = {
-    '01': moment().format('Enero-YYYY'),
-    '02': moment().format('Febrero-YYYY'),
-    '03': moment().format('Marzo-YYYY'),
-    '04': moment().format('Abril-YYYY'),
-    '05': moment().format('Mayo-YYYY'),
-    '06': moment().format('Junio-YYYY'),
-    '07': moment().format('Julio-YYYY'),
-    '08': moment().format('Agosto-YYYY'),
-    '09': moment().format('Septiembre-YYYY'),
-    '10': moment().format('Octubre-YYYY'),
-    '11': moment().format('Noviembre-YYYY'),
-    '12': moment().format('Diciembre-YYYY'),
+    '01': 'Enero -' + moment().format('YYYY'),
+    '02': 'Febrero -' + moment().format('YYYY'),
+    '03': 'Marzo -' + moment().format('YYYY'),
+    '04': 'Abril -' + moment().format('YYYY'),
+    '05': 'Mayo -' + moment().format('YYYY'),
+    '06': 'Junio -' +moment().format('YYYY'),
+    '07': 'Julio -' + moment().format('YYYY'),
+    '08': 'Agosto -' + moment().format('YYYY'),
+    '09': 'Septiembre -' + moment().format('YYYY'),
+    '10': 'Octubre -' + moment().format('YYYY'),
+    '11': 'Noviembre -' + moment().format('YYYY'),
+    '12': 'Diciembre -' + moment().format('YYYY'),
   };
   const fecha = meses[month];
   console.log(fecha);
@@ -62,19 +62,34 @@ exports.dashboardview =  async (req,res,next) => {
 }
 
 exports.resumeView = async (req,res,next) => {
-  
-  /*const mostconsultation = await consultastabla.findAll({
-    attibutes:['id_usuario',
-      [Sequelize.fn('COUNT', Sequelize.col('id_usuario')), 'count']
-    ],
-    group: 'id_usuario'
-    }
-  );*/
+  let fechainicial, fechafinal;
+  let finalbody = [];
+  const mostconsultation = await consultastabla.count({
+    group: ['id_consulta_usuario'],
+    attributes:['id_consulta_usuario'],
+    order:['count'],
+    },
+  );
+  for (const item of mostconsultation) {
+    let result = await searchUser(item);
+    finalbody.push(result);
+  }
+
   //const mostmoney = await gastostabla.findAll({});
-  return res.render('/Pagos/Indicadores');
+  return await res.render('Pagos/Indicadores',{finalbody});
 }
 
 exports.economyView = async (req,res,next) =>{
-
+  
   return res.render();
 }
+
+const searchUser = async (item) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      let result = usuariostabla.findByPk(item.id_consulta_usuario,{attributes:['nombre','apellido_paterno','apellido_materno']});
+      result.count = item.count;
+      resolve(result);
+    }, item.delay);
+  });
+};

@@ -84,9 +84,28 @@
                 method: 'DELETE'
             })
         }
+        function cortarFecha(fecha) {
+            return fecha.split(' GMT')[0];
+          }
     </script>  
 </head>
 <body>
+    <% 
+        function formatearFecha(fecha) {
+        const opcionesFecha = { 
+            weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' 
+        };
+        const opcionesHora = { 
+            hour: '2-digit', minute: '2-digit', second: '2-digit' 
+        };
+    
+        const fechaObj = new Date(fecha);
+        const fechaFormateada = fechaObj.toLocaleDateString('es-ES', opcionesFecha);
+        const horaFormateada = fechaObj.toLocaleTimeString('es-ES', opcionesHora);
+    
+        return `${fechaFormateada} ${horaFormateada}`;
+        }
+     %>
     <%- include('../header') %>
     <div class="container">
         <div class="details">
@@ -116,11 +135,11 @@
             <tbody>
                 <% consultasList.Consultas.forEach(item => { %>
                     <tr>
-                        <td><%= item.fecha_sesion %></td>
+                        <td><%= formatearFecha(item.fecha_sesion) %></td>
                         <td><%= item.tipo_cita %></td>
                         <td><%= item.tipo_tratamiento %></td>
                         <td>
-                            <button onclick="redirectToUser('<%= item.id_padecimiento_consulta %>')">Ver Padecimiento</button>
+                            <button onclick="redirectToUser('<%= item.id_consulta %>')">Ver Detalles</button>
                         </td>
                         <td>
                             <button onclick="redirectToDeleteConsulta('<%= item.id_consulta %>')">Eliminar Consulta</button>

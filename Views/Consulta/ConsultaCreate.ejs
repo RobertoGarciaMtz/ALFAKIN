@@ -59,6 +59,17 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
 
         .form input[type="submit"]:hover {
             background-color: #0056b3;
@@ -125,6 +136,32 @@ select {
                     <label class="user-create-label" for="fechaSesion">Fecha de Sesion:</label>
                     <input type="datetime-local" id="fechaSesion" name="fechaSesion" class="custom-date" required>
                 </div>
+                <h2>Detalles de Pago</h2>
+                <div>
+                    <label for="Cantidad">Cantidad:</label>
+                    <input type="number" id="cantidad" name="cantidad" />
+                </div>
+                <div>
+                    <label for="Pagado">Sesion Pagada:</label>
+                    <label>
+                        <input type="radio" name="pagado" value="true" /> Pagado
+                    </label>
+                    <label>
+                        <input type="radio" name="pagado" value="false" /> No Pagado
+                    </label>
+                </div>
+                <div>
+                    <label for="tipopago" class="user-create-label">Tipo de Pago:</label>
+                    <select id="tipopago" name="tipopago" class="user-create-select" required>
+                        <option value="">Seleccionar</option>
+                        <option value="Inicial">Inicial</option>
+                        <option value="Subsecuente">Subsecuente</option>
+                        <option value="Paquete 10 sesiones">Paquete 10 sesiones</option>
+                        <option value="Paquete 6 sesiones">Paquete 6 sesiones</option>
+                        <option value="Referenciado">Referenciado</option>
+                    </select>
+                </div>
+
                 <h2>Detalles de la sesion</h2>
                 <input type="hidden"id="id_usuario" name="id_usuario" value='<%= User.id_usuario %>'>
 
@@ -138,13 +175,13 @@ select {
                 <input type="text" id="zdolor" name="zdolor" value="Llenar dia de consulta" required>
 
                 <label for="Comentarios">Comentarios:</label>
-                <textarea id="comentarios" name="comentarios" value="Llenar dia de consulta" rows="4" required></textarea>
+                <textarea id="comentarios" name="comentarios" value="Llenar dia de consulta" rows="3" required></textarea>
 
                 <label for="Recomendaciones">Recomendaciones:</label>
-                <textarea id="recomendaciones" name="recomendaciones" value="Llenar dia de consulta" rows="4" required></textarea>
+                <textarea id="recomendaciones" name="recomendaciones" value="Llenar dia de consulta" rows="3" required></textarea>
 
                 <label for="Tratamiento">Tratamiento:</label>
-                <textarea id="tratamiento" name="tratamiento" value="Llenar dia de consulta" rows="4" required></textarea>
+                <textarea id="tratamiento" name="tratamiento" value="Llenar dia de consulta" rows="3" required></textarea>
 
                 <input type="submit" value="Guardar Detalles">
             </form>
