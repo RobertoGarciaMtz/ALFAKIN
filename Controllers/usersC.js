@@ -5,12 +5,14 @@ const { Op } = require('sequelize');
 const {calculateAge} = require("../utils/FuncionesUtils.js");
 
 exports.userViewNO = (req,res,next) =>{
-  res.render('Users/NewOldUser');
+  let idUsuario = req.query.id;
+  res.render('Users/NewOldUser',{"id":idUsuario});
   return;
 }
 
 exports.registerusersView =  (req, res, next) => {
-    res.render('Users/UserCreate');
+    let idUsuario = req.query.id;
+    res.render('Users/UserCreate',{"id":idUsuario});
     return;
   };
 
@@ -121,7 +123,8 @@ console.log("No entra este pedo");
 }
 
 exports.existinguserView = async (req,res,next) =>{
-  await res.render('Users/ExistingUser');
+  let idUsuario = req.query.id;
+  await res.render('Users/ExistingUser',{"id":idUsuario});
   return;
 }
 exports.searchfilters = async (req,res,next) => {
@@ -148,6 +151,7 @@ exports.searchfilters = async (req,res,next) => {
 }
 
 exports.usersListView = async (req, res, next) => {
+  let idUsuario = req.query.id;
   const usersList = await usuariostabla.findAll({
     where: {
       [Op.or]: [
@@ -162,7 +166,7 @@ exports.usersListView = async (req, res, next) => {
     const Edad = calculateAge(usersList[index].fecha_nacimiento);
     usersList[index].Edad = Edad;
   }
-  await res.render('Users/UserList',{user:usersList});
+  await res.render('Users/UserList',{"user":usersList,"id":idUsuario});
   return;
 };
   

@@ -1,25 +1,39 @@
 const {Request,Response} = require("express");
 const {validarTokenJWT} = require("../utils/tokenUtils.js");
-const whiteList = ["/","/utilidades/authmethod"];
+const usuariostabla = require('../models/User.model');
+
+const whiteList = ["/","/utilidades/authmethod","/favicon.ico","/LOGO_ALFAKINE.webp"];
+
 /**
  * 
  * @param {Request} req 
- * @param {*} res 
+ * @param {Response} res 
  * @param {*} next 
  */
-const validarToken = function(req,res,next){
-    const {authorization} = req.headers;
-    console.log("El path que se visita es: "+req.path);
-    const pathActual = whiteList.find(e=> e.localeCompare(req.path));
-    if(pathActual === undefined){
-        if(authorization === undefined){
-            console.error("Aqui debe ejecutarse el error de que no se debe continuar porque no se cuenta con token");
-             //throw new Error("La peticion no cuenta con token de autorizacion");
-        }else{
-            // const tokendata = validarTokenJWT(authorization);   
+const validarToken = async function(req,res,next) {
+    let pass = true;
+    let idUsuario = req.query.id;
+    if(whiteList.find(e=> e === req.path) != undefined){
+        next();
+        return;
+    }else{
+        console.log("ruta a la cual se esta accediendo"+req.path);
+        const entidadUsuario = await usuariostabla.findByPk(idUsuario);
+        if(entidadUsuario === undefined || entidadUsuario === null){
+            console.error("La entidad que se intento buscar no existe");
+            throw new Error("La peticion no cuenta con token de autorizacion");
         }
+        try{
+           validarTokenJWT(entidadUsuario.HashedKey);   
+        }catch(error){
+            pass = false;
+            console.error(error);
+            res.redirect("/?err=102");
+        }        
     }
-    next();
+    if(pass){
+        next();
+    }
 }
 
 /**

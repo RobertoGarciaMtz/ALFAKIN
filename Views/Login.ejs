@@ -8,8 +8,11 @@
 </head>
 <body>
     <div class="container">
-        <% if (err != "") { %>
+        <% if (err === "101") { %>
             <h3>El correo y/o la contraseña estan equivocadas.</h3>
+        <% } %>
+        <% if (err === "102") { %>
+            <h3>La sesion ha caducado, volver a iniciar sesion</h3>
         <% } %>
         <h2>Iniciar sesión</h2>
         <form id="loginForm" action="/utilidades/authmethod" method="post">

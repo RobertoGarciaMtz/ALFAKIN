@@ -32,15 +32,18 @@ exports.loginAuth = async (req, res,next) =>{
 
   if(checarLogeo){
     const token = crearToken(usuarioPosible.id_usuario);
-  
+    usuarioPosible.HashedKey = token;
+    await usuarioPosible.save({fields:["HashedKey"]});
   }else{
     res.redirect("/?err=101")
   }
-  res.redirect('/utilidades/Dashboard');
+  res.redirect('/utilidades/Dashboard?id='+usuarioPosible.id_usuario);
   
 } 
 
 exports.dashboardview =  async (req,res,next) => {
+  const id = req.query.id;
+  console.log(id);
   const month = moment().format('MM');
   const meses = {
     '01': 'Enero -' + moment().format('YYYY'),
@@ -58,10 +61,11 @@ exports.dashboardview =  async (req,res,next) => {
   };
   const fecha = meses[month];
   console.log(fecha);
-  return res.render('Dashboard',{fecha});
+  return res.render('Dashboard',{fecha,id});
 }
 
 exports.resumeView = async (req,res,next) => {
+  let idUsuario = req.query.id;
   let fechainicial, fechafinal;
   let finalbody = [];
   const mostconsultation = await consultastabla.count({
@@ -76,7 +80,7 @@ exports.resumeView = async (req,res,next) => {
   }
 
   //const mostmoney = await gastostabla.findAll({});
-  return await res.render('Pagos/Indicadores',{finalbody});
+  return await res.render('Pagos/Indicadores',{"finalbody":finalbody,"id":idUsuario});
 }
 
 exports.economyView = async (req,res,next) =>{
