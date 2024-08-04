@@ -10,11 +10,11 @@
     <%- include('../header') %>
     <div class="container">
         <div class="button-container">
-            <a href="/usuarios/createuserV"><button class="button" id="new-user-btn">Nuevo Usuario</button></a>
+            <a href="/usuarios/createuserV?id=<%= id %>"><button class="button" id="new-user-btn">Nuevo Usuario</button></a>
             <p class="text">Botón para crear una consulta con un cliente el cual es la primera vez que viene</p>
         </div>
         <div class="button-container">
-            <a href="/usuarios/findUserbySpecV"><button class="button" id="registered-user-btn">Usuario Ya Registrado</button></a>
+            <a href="/usuarios/findUserbySpecV?id=<%= id %>"><button class="button" id="registered-user-btn">Usuario Ya Registrado</button></a>
             <p class="text">Botón para crear una consulta con un cliente el cual ha venido anteriormente</p>
         </div>
     </div>

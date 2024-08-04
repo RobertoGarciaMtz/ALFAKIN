@@ -6,12 +6,20 @@
     <title>Crear Usuario</title>
     <link rel="stylesheet" href="../users.css">
     <script>
+        function obtenerId(){
+            const id = document.getElementById("clvIdActual").innerHTML;
+            console.log("El id que se esta obteniendo es: "+id);
+            return id;
+        }
+
         function redirectToConsultas(userId) {
-            window.location.href = "/consultas/"+userId;
+            const id = obtenerId();
+            window.location.href = "/consultas/"+userId+"?id="+id;
         }
 
         function redirectToEdit(userId) {
-            window.location.href = "/usuarios/userbyEditV/"+userId;
+            const id = obtenerId();
+            window.location.href = "/usuarios/userbyEditV/"+userId+"?id="+id;
         }
     </script>
 </head>

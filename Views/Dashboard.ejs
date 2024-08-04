@@ -93,7 +93,9 @@
                         const currentDay = dayCount; // Capturar el valor actual de dayCount
                         cell.textContent = currentDay;
                         cell.addEventListener('click', function() {
-                            const newUrl = `/consultas/consultaDia/${currentDay}`;
+                            const id = document.getElementById("clvIdActual").innerHTML;
+                            console.log("El id que se esta obteniendo es: "+id);
+                            const newUrl = `/consultas/consultaDia/${currentDay}?id=${id}`;
                             window.location.href = newUrl;
                         });
                         row.appendChild(cell);
