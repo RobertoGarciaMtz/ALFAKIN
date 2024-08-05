@@ -75,7 +75,7 @@ body {
     <%- include('../header') %>
     <div class="edit-user-container">
         <h1 class="edit-user-title">Editar datos de paciente</h1>
-        <form action="/usuarios/editarUsuario/<%= entidadUsuario.id_usuario %>?_method=PUT" method="post" class="edit-user-form">
+        <form action="/usuarios/editarUsuario/<%= entidadUsuario.id_usuario %>?_method=PUT&id=<%= id %>" method="post" class="edit-user-form">
             <label for="nombre" class="edit-user-label">Nombre</label>
             <input type="text" id="nombre" name="nombre" value="<%= entidadUsuario.nombre %>" class="edit-user-input">
 

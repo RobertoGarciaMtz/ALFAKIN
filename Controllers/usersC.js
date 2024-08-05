@@ -18,6 +18,7 @@ exports.registerusersView =  (req, res, next) => {
 
 exports.registerusersMethod = async (req,res,next) =>{
   try{
+    let idUsuario = req.query.id;
     const contrasena = await generarContrasena("contrasena");
     const newUser = await usuariostabla.create({
       nombre: req.body.nombre,
@@ -32,7 +33,7 @@ exports.registerusersMethod = async (req,res,next) =>{
       contrasena
     });
 
-    return res.redirect('usersList');
+    return res.redirect('usersList?id='+idUsuario);
   } catch(err){
     console.log(err)
     return res.json({Message: "Ha habido un problema en la creacion del usuario"});
@@ -92,7 +93,7 @@ exports.UserEditView = async (req,res,next) =>{
   if(entidadUsuario === null){
     return res.status(404).json({"razon":"No se encontro el recurso "+idUsuario});
   }
-  return  await res.render('Users/UserEdit',{entidadUsuario});
+  return  await res.render('Users/UserEdit',{"entidadUsuario":entidadUsuario,"id":req.query.id});
 }
 
 exports.editarUsuario = async (req,res,next) => {
@@ -147,7 +148,7 @@ exports.searchfilters = async (req,res,next) => {
       [Op.and]: toFindre4
     }
   });
-  return await res.render('Users/UserList',{user:usersList});
+  return await res.render('Users/UserList',{user:usersList,"id":req.query.id});
 }
 
 exports.usersListView = async (req, res, next) => {
@@ -176,6 +177,6 @@ exports.findUserbyId = async (req,res,next) => {
   );
   const Edad = calculateAge(User.fecha_nacimiento);
   User.Edad = Edad;
-  await res.render('Users/UserbyId',{User});
+  await res.render('Users/UserbyId',{"User":User,"id":req.query.id});
   return;
 };

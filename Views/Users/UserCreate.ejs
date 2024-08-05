@@ -10,7 +10,7 @@
     <%- include('../header') %>
     <div class="user-create-container">
         <h2>Registrar paciente</h2>
-        <form action="/usuarios/createuserM" method="post">
+        <form action="/usuarios/createuserM?id=<%= id %>" method="post">
             <div class="user-create-form-group">    
                 <label for="nombre" class="user-create-label">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" class="user-create-input" required>

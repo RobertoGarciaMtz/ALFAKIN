@@ -24,7 +24,7 @@ exports.padecimientoById = async (req,res,next) =>{
         pagado: true,
         tipopago: "Pendiente"
       };
-      return await res.render('Padecimientos/PadecimientosbyId',{information});
+      return await res.render('Padecimientos/PadecimientosbyId',{"information":information,"id":req.query.id});
   }
-  return res.render('Padecimientos/PadecimientosbyId',{information});
+  return res.render('Padecimientos/PadecimientosbyId',{"information":information,"id":req.query.id});
 }

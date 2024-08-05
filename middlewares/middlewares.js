@@ -2,7 +2,16 @@ const {Request,Response} = require("express");
 const {validarTokenJWT} = require("../utils/tokenUtils.js");
 const usuariostabla = require('../models/User.model');
 
-const whiteList = ["/","/utilidades/authmethod","/favicon.ico","/LOGO_ALFAKINE.webp"];
+const whiteList = [
+    "/",
+    "/utilidades/authmethod",
+    "/favicon.ico",
+    "/LOGO_ALFAKINE.webp",
+    "/usuarios/users.css",
+    "/usuarios/LOGO_ALFAKINE.webp",
+    "/consultas/LOGO_ALFAKINE.webp",
+    "/css/edit-user.css"
+];
 
 /**
  * 

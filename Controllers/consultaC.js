@@ -12,7 +12,7 @@ exports.registrarConsultaVista = async (req, res, next) => {
     const  User = await usuariostabla.findOne({where:{
       Rol: "Admin"
     }});
-    return await res.render('Consulta/ConsultaCreate',{User});
+    return await res.render('Consulta/ConsultaCreate',{"User":User,"id":req.query.id});
   }
   else {
     try{
@@ -29,7 +29,7 @@ exports.registrarConsultaVista = async (req, res, next) => {
       listafisios.push(objetodummy);
     }
     User.lista = listafisios;*/
-    return await res.render('Consulta/ConsultaCreate',{User});
+    return await res.render('Consulta/ConsultaCreate',{"User":User,"id":req.query.id});
     } catch (Error){
       console.log(Error);
     }  
@@ -95,7 +95,7 @@ exports.usersListView = async (req, res, next) => {
     const age = calculateAge(usersList[index].Birthday);
     usersList[index].Age = age;
   }
-  await res.render('Users/UserList',{user:usersList});
+  await res.render('Users/UserList',{user:usersList,"id":req.query.id});
 };
 
 /**
@@ -130,7 +130,7 @@ exports.consultaConUsuario = async(req,res,next) => {
   });
   //console.log(consultasList[0].fecha_nacimiento);
   //consultasList[0].Edad = await calculateAge(consultasList[0].fecha_nacimiento);
-   await res.render("consulta/ConsultaUserList",{consultasList:consultasList[0]});
+   await res.render("consulta/ConsultaUserList",{consultasList:consultasList[0],"id":req.query.id});
    return;
 };
 
@@ -172,7 +172,7 @@ exports.crearConsultaPadacimiento = async(req,res,next) => {
     tipopago: tipopagobody,
     id_pago_consulta: nuevaConsulta.id_consulta,
   })
-  return await res.redirect('/consultas/'+req.body.id_usuario);
+  return await res.redirect('/consultas/'+req.body.id_usuario+"?id="+req.query.id);
   res.json(nuevaConsulta);
 };
 
@@ -190,5 +190,5 @@ exports.consultaPorDia = async (req,res,next) => {
       ['fecha_sesion', 'DESC'],
   ],
   });
-  return  await res.render('consulta/ConsultaByDay',{listaConsultas});
+  return  await res.render('consulta/ConsultaByDay',{"listaConsultas":listaConsultas,"id":req.query.id});
 }

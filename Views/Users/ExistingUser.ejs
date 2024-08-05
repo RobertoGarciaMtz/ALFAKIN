@@ -28,7 +28,7 @@
     <div class="user-create-container">
         <h2>Buscar paciente existente</h2>
         <h3>Llenar mas campos para una busqueda mas precisa</h3>
-        <form id="queryForm" action="/usuarios/findUserbySpec" method="GET">
+        <form id="queryForm" action="/usuarios/findUserbySpec?id=<%= id %>" method="GET">
             <div class="user-create-form-group">    
                 <label for="nombre" class="user-create-label">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" class="user-create-input">
@@ -44,6 +44,10 @@
             <div class="user-create-form-group">
                 <label for="telefono" class="user-create-label">Telefono:</label>
                 <input type="text" id="telefono" name="telefono" class="user-create-input">
+            </div>
+            <div style="display: none;" class="user-create-form-group">
+                <label for="telefono" style="display: none;" class="user-create-label">Telefono:</label>
+                <input type="hidden" style="display: none;" id="id" name="id" class="user-create-input" value="<%= id %>">
             </div>
             <button type="submit">Buscar</button>
         </form>
