@@ -3,7 +3,7 @@ const sk = process.env.SECRET_KEY;
 
 const crearToken = (payload) => {
     console.log("Se va a crear el token con el payload: "+payload);
-    return jwt.sign({"val":payload},sk,{ expiresIn:"2m"});
+    return jwt.sign({"val":payload},sk,{ expiresIn:"4h"});
 }
 
 const validarTokenJWT = (token) => {jwt.verify(token,sk);}

@@ -14,6 +14,9 @@
         <% if (err === "102") { %>
             <h3>La sesion ha caducado, volver a iniciar sesion</h3>
         <% } %>
+        <% if (err === "103") { %>
+            <h3>Ha ocurrido un error, por favor vuelva a iniciar sesión</h3>
+        <% } %>
         <h2>Iniciar sesión</h2>
         <form id="loginForm" action="/utilidades/authmethod" method="post">
             <div class="form-group">

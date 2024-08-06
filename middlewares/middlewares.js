@@ -27,17 +27,23 @@ const validarToken = async function(req,res,next) {
         return;
     }else{
         console.log("ruta a la cual se esta accediendo"+req.path);
-        const entidadUsuario = await usuariostabla.findByPk(idUsuario);
-        if(entidadUsuario === undefined || entidadUsuario === null){
-            console.error("La entidad que se intento buscar no existe");
-            throw new Error("La peticion no cuenta con token de autorizacion");
-        }
-        try{
-           validarTokenJWT(entidadUsuario.HashedKey);   
-        }catch(error){
+        if(idUsuario === undefined){
+            res.redirect("/?err=103");
             pass = false;
-            console.error(error);
-            res.redirect("/?err=102");
+        }else{
+            const entidadUsuario = await usuariostabla.findByPk(idUsuario);
+            if(entidadUsuario === undefined || entidadUsuario === null){
+                console.error("La entidad que se intento buscar no existe");
+                res.redirect("/?err=103");
+                pass = false;
+            }
+            try{
+            validarTokenJWT(entidadUsuario.HashedKey);   
+            }catch(error){
+                pass = false;
+                console.error(error);
+                res.redirect("/?err=102");
+            }
         }        
     }
     if(pass){
