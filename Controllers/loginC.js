@@ -21,7 +21,6 @@ exports.loginView =  (req, res, next) => {
  */
 exports.loginAuth = async (req, res,next) =>{
   const {password,Usuario} = req.body;
-  console.log(Usuario);
   const usuarioPosible = await usuariostabla.findOne({where: { nombre: Usuario,Rol: "Admin"}});
 
   if(usuarioPosible === null || usuarioPosible === undefined){
@@ -74,6 +73,8 @@ exports.resumeView = async (req,res,next) => {
     order:['count'],
     },
   );
+  const totalconsultas = await consultastabla.count();
+  const entrymoney = await gastostabla.count();
   for (const item of mostconsultation) {
     let result = await searchUser(item);
     finalbody.push(result);

@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
-const sk = process.env.SECRET_KEY;
+const sk = process.env.SECRET_KEY; //le falta el secret key
 
 const crearToken = (payload) => {
     console.log("Se va a crear el token con el payload: "+payload);
-    return jwt.sign({"val":payload},sk,{ expiresIn:"4h"});
+    return jwt.sign({"val":payload},sk,{ expiresIn:"30m"});
 }
 
 const validarTokenJWT = (token) => {jwt.verify(token,sk);}
