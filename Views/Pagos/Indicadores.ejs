@@ -1,15 +1,118 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Usuario</title>
-    <link rel="stylesheet" href="../users.css">
-    
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        #centeredFormContainer {
+            display: flex;
+            justify-content: center;
+            /* Alinea el formulario horizontalmente */
+            align-items: center;
+            /* Alinea el formulario verticalmente */
+            height: 100vh;
+            /* Asegura que ocupe toda la pantalla */
+            position: relative;
+            /* Posición relativa para evitar influir en otros elementos */
+        }
+
+        form {
+            display: flex;
+            justify-content: space-between;
+            /* Distribuye los elementos dentro del formulario */
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            box-sizing: border-box;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            transition: border 0.3s ease;
+        }
+
+        input[type="date"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
+
 <body>
     <%- include('../header') %>
-    <% finalbody.forEach(function(finalbody) { %>
-    <li><%= finalbody.nombre %> <%= finalbody.apellido_paterno %> <%= finalbody.apellido_materno %></li>
-    <% }); %>
+        <form id="dateForm" action="/api/submit-dates" method="POST">
+            <label for="startDate">Fecha Inicio:</label>
+            <input type="date" id="startDate" name="startDate" required>
+
+            <label for="endDate">Fecha Fin:</label>
+            <input type="date" id="endDate" name="endDate" required>
+
+            <button type="submit">Enviar</button>
+        </form>
+        <h1>Consultas totales en el mes</h1>
+        <h2>
+            <%= finalbody.totalconsultas %>
+        </h2>
+        <h1>Total de ingresos</h1>
+        <h2>
+            <%= finalbody.dinerototal %> MXN
+        </h2>
+        <h1>Pacientes con mayor numero de visitas</h1>
+        <table class="user-list-table">
+            <thead>
+                <tr>
+                    <th>Visitas</th>
+                    <th>Nombre</th>
+                </tr>
+            </thead>
+            <tbody>
+            <% if (finalbody.mostusers.length==0) { %>
+                <h2>No hay registros para mostrar</h2>
+                <% } else { %>
+                    <tr>
+                    <% finalbody.mostusers.forEach(function(finalbody) { %>
+                        <td><%= finalbody.id_consulta_usuario %></td>
+                        <td><%= finalbody.Usuario.nombre %> <%= finalbody.Usuario.apellido_paterno %></td>
+                    </tr>
+                    <% }); %>
+                    <% } %>
+            </tbody>
+        </table>
+        <h1>Pacientes que mas han invertido</h1>
 </body>

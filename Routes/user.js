@@ -12,5 +12,6 @@ router.put('/editarUsuario/:userId',userController.editarUsuario);
 router.get('/findUserbySpecV',userController.existinguserView);
 router.get('/findUserbySpec',userController.searchfilters);
 router.post('/crearUsuarioMedico',userController.crearUsuarioMedico);
+router.get('/crearUsuarioMedicoV',userController.crearUsuarioMedicoV);
 router.delete('/eliminarUsuario/:userId',userController.eliminarUsuario);
 module.exports = router;

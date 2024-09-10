@@ -26,8 +26,9 @@
 <body>
     <%- include('../header') %>
     <div class="user-create-container">
-        <h2>Buscar paciente existente</h2>
-        <h3>Llenar mas campos para una busqueda mas precisa</h3>
+        <h2>Buscar paciente</h2>
+        <h3>Buscar paciente para agendar cita <br> Llenar mas campos para una busqueda mas precisa</h3>
+        <h3></h3>
         <form id="queryForm" action="/usuarios/findUserbySpec?id=<%= id %>" method="GET">
             <div class="user-create-form-group">    
                 <label for="nombre" class="user-create-label">Nombre:</label>

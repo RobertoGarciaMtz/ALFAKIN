@@ -37,10 +37,26 @@
             font-weight: bold;
         }
 
-        .form {
-            padding-top: 20px;
+        #centeredFormContainer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 600px; /* Ancho máximo para el formulario */
         }
 
+        /* Estilos del formulario */
+        form {
+            display: flex;
+            flex-direction: column; /* Inputs dispuestos verticalmente */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            width: 100%; /* Ocupará el 100% del contenedor */
+        }
         .form input[type="text"],
         .form textarea {
             width: 100%;
@@ -125,7 +141,7 @@ select {
         </div>
         <div class="form">
             <h2>Detalles Consulta</h2>
-            <form action='/consultas/' method="post">
+            <form action='/consultas/?id=<%= id %>' method="post">
                 <div>
                     <label for="TipoCita" class="user-create-label">Tipo de Cita:</label>
                     <select id="tipoCita" name="tipoCita"required>
@@ -139,17 +155,19 @@ select {
                 <h2>Detalles de Pago</h2>
                 <div>
                     <label for="Cantidad">Cantidad:</label>
-                    <input type="number" id="cantidad" name="cantidad" />
+                    <input type="number" id="cantidad" name="cantidad" value=00.0/>
                 </div>
                 <div>
-                    <label for="Pagado">Sesion Pagada:</label>
+                    <label for="Pagado">Sesion:</label>
                     <label>
                         <input type="radio" name="pagado" value="true" /> Pagado
                     </label>
                     <label>
                         <input type="radio" name="pagado" value="false" /> No Pagado
                     </label>
+                    
                 </div>
+                <br>
                 <div>
                     <label for="tipopago" class="user-create-label">Tipo de Pago:</label>
                     <select id="tipopago" name="tipopago" class="user-create-select" required>

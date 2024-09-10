@@ -2,7 +2,7 @@ const usuariostabla = require('../Models/User.model');
 const {validarContrasena} = require("../utils/UtilsPassword.js");
 const {crearToken} = require("../utils/tokenUtils.js");
 const consultastabla = require('../models/Consultas.model');
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const gastostabla = require('../models/Pagos.model');
 const moment = require('moment');
 
@@ -21,7 +21,7 @@ exports.loginView =  (req, res, next) => {
  */
 exports.loginAuth = async (req, res,next) =>{
   const {password,Usuario} = req.body;
-  const usuarioPosible = await usuariostabla.findOne({where: { nombre: Usuario,Rol: "Admin"}});
+  const usuarioPosible = await usuariostabla.findOne({where: { nombre: Usuario,Rol: {[Op.or]:["Admin","Medico"]} }});
 
   if(usuarioPosible === null || usuarioPosible === undefined){
     throw new Error("No se encontro ningun usuario con las credenciales dadas");
@@ -36,7 +36,7 @@ exports.loginAuth = async (req, res,next) =>{
   }else{
     res.redirect("/?err=101")
   }
-  res.redirect('/utilidades/Dashboard?id='+usuarioPosible.id_usuario);
+  await res.redirect('/utilidades/Dashboard?id='+usuarioPosible.id_usuario);
   
 } 
 
@@ -59,42 +59,41 @@ exports.dashboardview =  async (req,res,next) => {
     '12': 'Diciembre -' + moment().format('YYYY'),
   };
   const fecha = meses[month];
-  console.log(fecha);
   return res.render('Dashboard',{fecha,id});
 }
 
 exports.resumeView = async (req,res,next) => {
   let idUsuario = req.query.id;
   let fechainicial, fechafinal;
-  let finalbody = [];
-  const mostconsultation = await consultastabla.count({
-    group: ['id_consulta_usuario'],
-    attributes:['id_consulta_usuario'],
-    order:['count'],
-    },
-  );
+  const mostconsultation = await consultastabla.findAll({
+    attributes: [
+      [Sequelize.fn('COUNT', Sequelize.col('id_consulta_usuario')), 'id_consulta_usuario'] // Contar los registros de la tabla Post
+    ],
+    include: [{
+      model: usuariostabla, // Hacemos el JOIN con la tabla Post
+      attributes:['nombre','apellido_paterno','apellido_materno']
+    }],
+    group: ['id_consulta_usuario'], // Agrupar por el ID del usuario
+  });
   const totalconsultas = await consultastabla.count();
-  const entrymoney = await gastostabla.count();
-  for (const item of mostconsultation) {
-    let result = await searchUser(item);
-    finalbody.push(result);
-  }
+  const totalmoney = await gastostabla.findAll(
+    {
+      attributes: 
+      [
+        [Sequelize.fn('Sum',Sequelize.col('cantidad')),'total']
+      ]
+    }
+  );
 
-  //const mostmoney = await gastostabla.findAll({});
-  return await res.render('Pagos/Indicadores',{"finalbody":finalbody,"id":idUsuario});
+  const finalbody = {
+    mostusers: mostconsultation,
+    totalconsultas: totalconsultas,
+    dinerototal: totalmoney[0].dataValues.total
+  };
+  return await res.render('Pagos/Indicadores',{finalbody,"id":idUsuario});
 }
 
 exports.economyView = async (req,res,next) =>{
   
   return res.render();
 }
-
-const searchUser = async (item) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      let result = usuariostabla.findByPk(item.id_consulta_usuario,{attributes:['nombre','apellido_paterno','apellido_materno']});
-      result.count = item.count;
-      resolve(result);
-    }, item.delay);
-  });
-};

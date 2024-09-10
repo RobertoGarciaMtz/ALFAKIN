@@ -24,40 +24,31 @@
                 }
             }
         }
-    </script> 
-    <script>
-
-        function obtenerId(){
-            const id = document.getElementById("clvIdActual").innerHTML;
-            console.log("El id que se esta obteniendo es: "+id);
-            return id;
-        } 
-
-        function redirectToUser(userId) {
-            const id = obtenerId();
+        
+        function redirectToUser(userId,id) {
             window.location.href = "/usuarios/userbyId/"+userId+"?id="+id;
         }
-        function redirectToConsulta(userId) {
-            const id = obtenerId();
+        function redirectToConsulta(userId,id) {
+           
             window.location.href = "/consultas/crearconsultaV/"+userId+"?id="+id;
         }
-        function redirectToSearch(){
-            const id = obtenerId();
+        function redirectToSearch(id){
+           
             window.location.href = "/usuarios/findUserbySpecV?id="+id;
         }
-        function redirectToInsert(){
-            const id = obtenerId();
+        function redirectToInsert(id){
+           
             window.location.href = "/usuarios/createuserV?id="+id;
         }
-    </script>
+    </script> 
 </head>
 <body>
     <%- include('../header') %>
     <div class="user-list-container">
         <h2>Lista de Pacientes registrados</h2>
         <div class="user-list-search">
-            <button onclick="redirectToSearch()">Buscar Paciente</button>      
-            <button onclick="redirectToInsert()">Registrar Paciente</button>          
+            <button onclick="redirectToSearch('<%= id %>')">Buscar Paciente</button>      
+            <button onclick="redirectToInsert('<%= id %>')">Registrar Paciente</button>          
         </div>
         <table class="user-list-table">
             <thead>
@@ -68,7 +59,7 @@
                     <th>Antecedentes Familiares</th>
                     <th>Age</th>
                     <th>Sexo</th>
-                    <th>Buscar</th>
+                    <th>Especs</th>
                     <th>Consulta</th>
                 </tr>
             </thead>
@@ -82,15 +73,20 @@
                         <td><%= user.Edad %></td>
                         <td><%= user.Sexo%></td>
                         <td>
-                            <button onclick="redirectToUser('<%= user.id_usuario %>')">Detalles</button>
+                            <button onclick="redirectToUser('<%= user.id_usuario %>','<%= id %>')">Detalles</button>
                         </td>
                         <td>
-                            <button onclick="redirectToConsulta('<%= user.id_usuario %>')">Nueva Consulta</button>
+                            <button onclick="redirectToConsulta('<%= user.id_usuario %>','<%= id %>')">Nueva Consulta</button>
                         </td>
                     </tr>
                 <% }); %>
             </tbody>
         </table>
+        <div class="pagination">
+            <button id="prevBtn" disabled>&laquo; Anterior</button>
+            <div id="pageNumbers"></div> <!-- Los botones de página se generarán aquí dinámicamente -->
+            <button id="nextBtn">&raquo; Siguiente</button>
+        </div>
     </div>
 </body>
 </html>

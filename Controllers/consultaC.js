@@ -7,7 +7,7 @@ const moment = require('moment');
 const { Op } = require('sequelize');
 
 exports.registrarConsultaVista = async (req, res, next) => {
-  let listafisios
+  let listafisios;
   if (req.params.userId == null || req.params.userId == undefined){
     const  User = await usuariostabla.findOne({where:{
       Rol: "Admin"
@@ -128,9 +128,8 @@ exports.consultaConUsuario = async(req,res,next) => {
       }
     }]
   });
-  //console.log(consultasList[0].fecha_nacimiento);
   //consultasList[0].Edad = await calculateAge(consultasList[0].fecha_nacimiento);
-   await res.render("consulta/ConsultaUserList",{consultasList:consultasList[0],"id":req.query.id});
+   await res.render("consulta/ConsultaUserList",{"consultasList":consultasList[0],"id":req.query.id});
    return;
 };
 
@@ -152,6 +151,7 @@ exports.crearConsultaPadacimiento = async(req,res,next) => {
   });
 
   if(nuevoPadecimiento === undefined){
+    return res.json({Message:"-ya hubo pedo"});
     throw new Error("No se pudo crear el nuevo padecimiento");
   }
 
@@ -171,11 +171,27 @@ exports.crearConsultaPadacimiento = async(req,res,next) => {
     pagado: pagadobody,
     tipopago: tipopagobody,
     id_pago_consulta: nuevaConsulta.id_consulta,
-  })
+  });
+  //// si es este controller a modificar
   return await res.redirect('/consultas/'+req.body.id_usuario+"?id="+req.query.id);
-  res.json(nuevaConsulta);
+  /*const consultasList = await usuariostabla.findAll({
+    where:{
+      id_usuario: req.body.id_usuario,
+    },
+    limit: 10,
+    include: [{
+      model: consultastabla,
+      order: [
+        ['fecha_sesion', 'ASC'],
+      ],
+      include:{
+        model: padecimientostabla,
+      }
+    }]
+  });
+  await res.render('Consulta/ConsultaUserList',{"consultasList":consultasList[0],'id':+req.query.id});
+  return;*/
 };
-
 
 exports.consultaPorDia = async (req,res,next) => {
   const dia = req.params.diaId;

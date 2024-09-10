@@ -40,10 +40,27 @@ exports.registerusersMethod = async (req,res,next) =>{
   }
 };
 
+exports.crearUsuarioMedicoV = async(req,res,next) => {
+  try{
+    let idUsuario = req.query.id;
+    res.render('Users/CreateAdmin',{"id":idUsuario});
+    return;
+  } catch(err){
+    console.log(err)
+    return res.json({"msg": "Ha habido un problema en la creacion del usuario"});
+  }
+}
 
 exports.crearUsuarioMedico = async (req,res,next) =>{
   try{
-    const contrasena = await generarContrasena("contrasena");
+    let rol;
+    const checkadmin = await usuariostabla.findOne({
+      where: {
+        Rol: "Admin"
+      }, attributes: ["Rol"]
+    });
+    checkadmin === null ? rol = "Admin" : rol = "Medico";
+    const contrasena = await generarContrasena(req.body.contrasena);
     await usuariostabla.create({
       nombre: req.body.nombre,
       apellido_paterno:  req.body.apellido_paterno,
@@ -58,7 +75,6 @@ exports.crearUsuarioMedico = async (req,res,next) =>{
     });
 
     return res.json({"msg":"El registro se ha creado correctamente"});
-
   } catch(err){
     console.log(err)
     return res.json({"msg": "Ha habido un problema en la creacion del usuario"});
@@ -68,7 +84,6 @@ exports.crearUsuarioMedico = async (req,res,next) =>{
 
 exports.eliminarUsuario = async (req,res,next) => {
   const idUsuario = req.params.userId;
-  console.log(idUsuario);
   const entidadUsuario = await usuariostabla.findOne({
     where:{
       id_usuario: idUsuario
@@ -97,7 +112,6 @@ exports.UserEditView = async (req,res,next) =>{
 }
 
 exports.editarUsuario = async (req,res,next) => {
-console.log("No entra este pedo");
     const idUsuario = req.params.userId;
 
     const entidadUsuario = await usuariostabla.findByPk(idUsuario);
@@ -118,8 +132,9 @@ console.log("No entra este pedo");
 
     await entidadUsuario.save({fields:["nombre","apellido_materno","apellido_paterno"
     ,"antecedentes_congenitos","antecedentes_familiares","fecha_nacimiento"]});
-
-    return res.status(200).json({"mensaje":"El registro ha sido actualizado correctamente"});
+    
+    return await res.render('Users/UserbyId',{"User":User,"id":req.query.id});
+    //return res.status(200).json({"mensaje":"El registro ha sido actualizado correctamente"});
 
 }
 
@@ -152,23 +167,33 @@ exports.searchfilters = async (req,res,next) => {
 }
 
 exports.usersListView = async (req, res, next) => {
-  let idUsuario = req.query.id;
-  const usersList = await usuariostabla.findAll({
-    where: {
-      [Op.or]: [
-        { Rol: "Client" },
-        { Rol: "Fisioterapeuta" },
-      ]
-    },
+  try{
+    let idUsuario = req.query.id;
+    let usersList = await usuariostabla.findAll({
+      where: {
+        [Op.or]: [
+          { Rol: "Client" },
+          { Rol: "Fisioterapeuta" },
+        ]
+      },
+      order: [
+        ['created_at', 'DESC'],
+      ],
+      limit: 10,
+    }
+    );
+    const max = usersList.length;
+    for (let index = 0; index < max; index++) {
+      const Edad = calculateAge(usersList[index].fecha_nacimiento);
+      usersList[index].Edad = Edad;
+    }
+    const fullbody = {"user":usersList,"total":100,"id":idUsuario};
+    //return res.json(fullbody);
+    return await res.render('Users/UserList',{"user":usersList,"id":req.query.id});
+  } catch(err){
+    console.log(err)
+    return res.json({"msg": "Ha habido un problema en la creacion del usuario"});
   }
-  );
-  const max = usersList.length;
-  for (let index = 0; index < max; index++) {
-    const Edad = calculateAge(usersList[index].fecha_nacimiento);
-    usersList[index].Edad = Edad;
-  }
-  await res.render('Users/UserList',{"user":usersList,"id":idUsuario});
-  return;
 };
   
 exports.findUserbyId = async (req,res,next) => {

@@ -63,6 +63,27 @@
         .form input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+        .user-list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-list-table th,
+.user-list-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.user-list-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.user-list-table tbody tr:hover {
+    background-color: #f2f2f2;
+}
     </style>
     <script>
         function obtenerId(){
@@ -133,7 +154,7 @@
         <button onclick="redirectToConsultas('<%= consultasList.id_usuario %>')">Ver consultas</button>
         <button onclick="redirectToRegisterConsulta('<%= consultasList.id_usuario %>')">Agendar Consulta</button>
         <h1>Consultas previas</h1>
-        <table>
+        <table class="user-list-table">
             <thead>
                 <tr>
                     <th>Fecha Sesion</th>
