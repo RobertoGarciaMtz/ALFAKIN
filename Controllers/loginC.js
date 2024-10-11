@@ -84,7 +84,17 @@ exports.resumeView = async (req,res,next) => {
       ]
     }
   );
-
+  /*const moneylist = await consultastabla.findAll({
+    attributes: [
+      [Sequelize.fn('Sum', Sequelize.col(gastostabla.cantidad)), 'totalD'], // Contar los registros de la tabla Post
+      'id_consulta_usuario'
+    ],
+    include: [{
+      model: gastostabla, // Hacemos el JOIN con la tabla Post
+    }],
+    group: ['id_consulta_usuario'], // Agrupar por el ID del usuario
+  });
+  return res.json(moneylist);*/
   const finalbody = {
     mostusers: mostconsultation,
     totalconsultas: totalconsultas,

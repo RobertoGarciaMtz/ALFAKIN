@@ -89,7 +89,9 @@ exports.editarDatosConsultaPorUsuario = async (req,res,next) => {
 }
 
 exports.usersListView = async (req, res, next) => {
-  const usersList = await usuariostabla.findAll();
+  const usersList = await usuariostabla.findAll(
+    {attributes: {exclude:[,'updated_at','Password','ImgProfile','Rol']}}
+  );
   const max = usersList.length;
   for (let index = 0; index < max; index++) {
     const age = calculateAge(usersList[index].Birthday);
@@ -118,6 +120,7 @@ exports.consultaConUsuario = async(req,res,next) => {
     },
     limit: 10,
     offset: 10*pagina,
+    attributes: {exclude:['updated_at','Password','ImgProfile','Rol']},
     include: [{
       model: consultastabla,
       order: [
@@ -128,7 +131,7 @@ exports.consultaConUsuario = async(req,res,next) => {
       }
     }]
   });
-  //consultasList[0].Edad = await calculateAge(consultasList[0].fecha_nacimiento);
+  consultasList[0].Edad = await calculateAge(consultasList[0].dataValues.fecha_nacimiento);
    await res.render("consulta/ConsultaUserList",{"consultasList":consultasList[0],"id":req.query.id});
    return;
 };

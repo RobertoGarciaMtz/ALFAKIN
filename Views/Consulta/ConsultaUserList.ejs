@@ -94,7 +94,7 @@
 
         function redirectToUser(padecimientoId) {
             const id = obtenerId();
-            window.location.href = "/padecimientos/"+padecimientoId;
+            window.location.href = "/padecimientos/"+padecimientoId+"?id="+id;
         }
         function redirectToConsultas(userId) {
             const id = obtenerId();
@@ -148,7 +148,7 @@
             <p><strong>Antecedentes Familiares:</strong> <%= consultasList.antecedentes_familiares %></p>
             <p><strong>Fecha de Nacimiento:</strong> <%= consultasList.Edad %></p>
             <p><strong>Sexo:</strong> <%= consultasList.Sexo %></p>
-            <p><strong>Telefono:</strong><%= consultasList.Telefono%></p>
+            <p><strong>Telefono:</strong><%= consultasList.telefono%></p>
         </div>
         <button onclick="redirectToEdit('<%= consultasList.id_usuario %>')">Editar</button>
         <button onclick="redirectToConsultas('<%= consultasList.id_usuario %>')">Ver consultas</button>
@@ -171,7 +171,7 @@
                         <td><%= item.tipo_cita %></td>
                         <td><%= item.tipo_tratamiento %></td>
                         <td>
-                            <button onclick="redirectToUser('<%= item.id_consulta %>')">Ver Detalles</button>
+                            <button onclick="redirectToUser('<%= item.id_consulta %>')">Llenar/Detalles</button>
                         </td>
                         <td>
                             <button onclick="redirectToDeleteConsulta('<%= item.id_consulta %>')">Eliminar Consulta</button>
